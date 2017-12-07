@@ -7,6 +7,7 @@ in
 {
   imports = [
     ./gui.nix
+    ./disk-mounting.nix
   ];
 
   options.ocelot.ui = {
