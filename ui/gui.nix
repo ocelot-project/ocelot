@@ -1,0 +1,73 @@
+{ config, lib, pkgs, ...}:
+
+with lib;
+
+let
+  cfg = config.ocelot.ui;
+in
+{
+  imports = [
+    ./ocelot-exwm.nix
+  ];
+
+  config = mkIf cfg.graphical {
+    environment.systemPackages = with pkgs; [
+      xfontsel
+      xdg_utils
+      xscreensaver
+      xorg.setxkbmap
+      xbanish
+    ];
+
+    services.xserver = {
+      enable = true;
+
+      windowManager = {
+        ocelot-exwm.enable = true;
+      };
+
+      desktopManager = {
+        default = "none";
+        xterm.enable = false;
+      };
+
+      displayManager = {
+        slim = {
+          enable = true;
+          theme = ./ocelot-slim-theme.tar.gz;
+
+          # Hide the "Session: DM+WM" text
+          extraConfig = ''
+            session_x -1000
+            session_y -1000
+          '';
+        };
+
+        sessionCommands =
+        ''
+          xrdb -merge "$HOME/.Xresources"
+          ${pkgs.xlibs.xset}/bin/xset r rate 200 30 # Set the keyboard repeat rate
+          ${optionalString cfg.bindCapsToEscape
+          "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:escape"}
+          ${optionalString cfg.bindCapsToControl
+          "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps"}
+
+          # TODO: manage mutable state much better than this
+          if [ ! -e "$HOME/.xscreensaver" ]; then
+          cp ${./configs/dot_xscreensaver} $HOME/.xscreensaver
+          chmod 644 $HOME/.xscreensaver
+          fi
+          if [ ! -e "$HOME/.emacs.d" ]; then
+          tar --directory $HOME -xvzf ${./configs/spacemacs.tar.gz}
+          fi
+
+          xsetroot -solid black &
+          xscreensaver -nosplash &
+        '';
+      };
+    };
+
+    # Hide the mouse pointer when typing
+    services.xbanish.enable = true;
+  };
+}
