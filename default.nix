@@ -23,6 +23,7 @@ with lib;
   config = mkMerge [{
     environment.systemPackages = with pkgs; [
       emacs
+      ag
     ];
 
     fonts = {
