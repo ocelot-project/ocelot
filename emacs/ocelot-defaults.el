@@ -150,6 +150,15 @@ Can show completions at point for COMMAND using helm or ido"
 (exwm-input-set-key (kbd "s-0")
                     (lambda () (interactive) (exwm-workspace-switch 9)))
 
+(define-advice exwm-workspace-move-window
+    (:around (move-window workspace-num)
+             focus-fix)
+  (setq exwm-frame-before-move-window (selected-frame))
+  (funcall move-window workspace-num)
+  (select-frame-set-input-focus exwm-frame-before-move-window t)
+  (when (fboundp 'powerline-set-selected-window)
+    (powerline-set-selected-window)))
+
 ;; Set bindings to move the current window to another workspace,
 ;; xmonad style.
 (exwm-input-set-key (kbd "s-!")
