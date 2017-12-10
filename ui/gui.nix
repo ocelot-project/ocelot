@@ -17,6 +17,9 @@ in
       xscreensaver
       xorg.setxkbmap
       xbanish
+
+      ghostscriptX # DocView mode (PDF)
+      unoconv # DocView mode (LibreOffice/MS formats)
     ];
 
     services.xserver = {

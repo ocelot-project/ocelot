@@ -23,7 +23,9 @@ with lib;
   config = mkMerge [{
     environment.systemPackages = with pkgs; [
       emacs
-      ag
+      ag # helm-ag and Spacemacs smart search
+      poppler # DocView mode (PDF)
+      poppler_utils # DocView mode (PDF)
     ];
 
     fonts = {
