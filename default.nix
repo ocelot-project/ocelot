@@ -47,12 +47,7 @@ with lib;
         ubuntu_font_family
       ];
     };
-  } (mkIf pkgs.config.allowUnfree {
-      fonts.fonts = with pkgs; [
-        corefonts
-      ];
-    })
-      (mkIf config.ocelot.boot.showBootloaderOnShift {
+  } (mkIf config.ocelot.boot.showBootloaderOnShift {
       boot.loader.grub.extraConfig = ''
         if keystatus; then
         if keystatus --shift; then
