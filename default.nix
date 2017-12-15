@@ -22,7 +22,13 @@ with lib;
 
   config = mkMerge [{
     environment.systemPackages = with pkgs; [
+      # Base packages:
       emacs
+      git # Nix-based distros usually lean heavily on git
+      man_db # extra documentation
+      manpages # extra documentation
+
+      # Emacs dependencies:
       ag # helm-ag and Spacemacs smart search
       poppler # DocView mode (PDF)
       poppler_utils # DocView mode (PDF)
