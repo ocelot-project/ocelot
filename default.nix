@@ -44,7 +44,10 @@ with lib;
         dejavu_fonts
         source-sans-pro
         source-code-pro
+        source-serif-pro
         ubuntu_font_family
+        google-fonts
+        emacs-all-the-icons-fonts
       ];
     };
   } (mkIf config.ocelot.boot.showBootloaderOnShift {
