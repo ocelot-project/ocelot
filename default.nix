@@ -45,9 +45,32 @@ with lib;
         source-sans-pro
         source-code-pro
         source-serif-pro
+        inconsolata
         ubuntu_font_family
-        google-fonts
         emacs-all-the-icons-fonts
+        material-icons
+
+        # The most popular Google Fonts with Nix derivations:
+        roboto
+        roboto-mono
+        roboto-slab
+        opensans-ttf
+        lato
+        montserrat
+        raleway
+        noto-fonts
+        quattrocento
+        quattrocento-sans
+        dosis
+        oxygenfonts
+        cabin
+        crimson
+        libre-baskerville
+        libre-franklin
+        eb-garamond
+        comfortaa
+        shrikhand
+        oldstandard
       ];
     };
   } (mkIf config.ocelot.boot.showBootloaderOnShift {
