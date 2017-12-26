@@ -14,8 +14,10 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
       cat >"$out/share/emacs/site-lisp/site-start.el" <<EOF
       (setq ocelot-early-boot-background-color "${earlyBootBackgroundColor}")
       (setq ocelot-early-boot-foreground-color "${earlyBootForegroundColor}")
-      (setq ocelot-pinned-packages '(cl-generic exwm xelb))
+
+      (setq ocelot-pinned-packages '(cl-generic exwm xelb ocelot))
       (setq ocelot-frozen-packages ocelot-pinned-packages)
+      (setq ocelot-spacemacs-layer-path "${./distro/spacemacs-layers}/")
 
       (load-file "$out/share/emacs/site-lisp/nix-start.el")
       (load-file "$out/share/emacs/site-lisp/ocelot-start.el")
@@ -29,8 +31,12 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
   elpaPinned = import ./epkgs/elpa-pinned.nix {
     inherit (self) callPackage;
   };
+  ocelot = import ./epkgs/ocelot-epkg.nix {
+    inherit (self) callPackage;
+  };
 });
 in
   ocelotEmacs.emacsWithPackages (epkgs: [
   epkgs.elpaPinned.exwm
+  epkgs.ocelot
 ])

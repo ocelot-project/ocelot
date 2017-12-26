@@ -20,7 +20,8 @@
     (require 'ocelot-defaults)
     (exwm-enable)))
 
-;; Spacemacs package pinning and freezing patches
+;; Spacemacs package pinning and freezing patches, and a hack to
+;; add a layer path.
 (with-eval-after-load 'core-configuration-layer
   (define-advice configuration-layer//is-package-orphan
       (:before-while (pkg-name dist-pkgs dependencies)
@@ -32,4 +33,11 @@
                ocelot-spacemacs-frozen-package-hack)
     (ignore args)
     (dolist (pkg ocelot-frozen-packages)
-      (add-to-list 'dotspacemacs-frozen-packages pkg))))
+      (add-to-list 'dotspacemacs-frozen-packages pkg)))
+
+  (define-advice configuration-layer/discover-layers
+      (:before (&rest args)
+               ocelot-spacemacs-system-layer-hack)
+    (ignore args)
+    (add-to-list 'dotspacemacs-configuration-layer-path
+                 ocelot-spacemacs-layer-path)))
