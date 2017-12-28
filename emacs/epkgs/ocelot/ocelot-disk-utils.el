@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'ocelot-logging)
+
 ;;;###autoload
 (defun ocelot-mount-all ()
   "Mount all of the removable devices on the system that aren't
