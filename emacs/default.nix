@@ -31,6 +31,7 @@ in
       emacs = import ./ocelot-emacs.nix {
         inherit (pkgs) emacsPackagesNg;
         inherit (pkgs) emacs;
+        inherit (pkgs) writeText;
         earlyBootForegroundColor = cfg.earlyBootForegroundColor;
         earlyBootBackgroundColor = cfg.earlyBootBackgroundColor;
       };

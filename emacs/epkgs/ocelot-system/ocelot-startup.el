@@ -41,3 +41,5 @@
     (ignore args)
     (add-to-list 'dotspacemacs-configuration-layer-path
                  ocelot-spacemacs-layer-path)))
+
+(provide 'ocelot-startup)
