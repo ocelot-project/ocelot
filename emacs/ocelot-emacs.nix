@@ -1,4 +1,5 @@
-{ emacsPackagesNg, emacs, writeText,
+{ lib, emacsPackagesNg, emacs, writeText,
+  versioning ? { system.Ocelot.version = "0.1"; },
   earlyBootBackgroundColor ? "#110024",
   earlyBootForegroundColor ? "#FFFFFF" }:
 
@@ -20,8 +21,10 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
     inherit (self) callPackage;
   };
   ocelot-system = import ./epkgs/ocelot-system.nix {
+    inherit lib;
     inherit (self) callPackage;
     inherit writeText;
+    inherit versioning;
     inherit earlyBootBackgroundColor;
     inherit earlyBootForegroundColor;
     exwm = self.elpaPinned.exwm;

@@ -29,9 +29,11 @@ in
   config = {
     nixpkgs.config.packageOverrides = pkgs: rec {
       emacs = import ./ocelot-emacs.nix {
+        inherit lib;
         inherit (pkgs) emacsPackagesNg;
         inherit (pkgs) emacs;
         inherit (pkgs) writeText;
+        versioning = config.ocelot.versions;
         earlyBootForegroundColor = cfg.earlyBootForegroundColor;
         earlyBootBackgroundColor = cfg.earlyBootBackgroundColor;
       };

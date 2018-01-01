@@ -9,8 +9,22 @@ with lib;
     ./security
   ];
 
-  options.ocelot.boot = {
-    showBootloaderOnShift = mkOption {
+  options.ocelot = {
+    versions = mkOption {
+      type = types.attrsOf types.attrs;
+      default = {
+        system.Ocelot.version = "0.1";
+        emacs.Emacs.version = pkgs.emacs.emacs.version;
+        application = {};
+        package-management.Nix.version = pkgs.nix.version;
+        base-system.NixOS.version = config.system.nixosRelease;
+        kernel.Linux.version = pkgs.linux.version;
+        platform.Platform.version = builtins.head
+          (builtins.match "(.*)-.*" builtins.currentSystem);
+      };
+    };
+
+    boot.showBootloaderOnShift = mkOption {
       type = types.bool;
       default = true;
       description = ''

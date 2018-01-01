@@ -20,6 +20,8 @@
 ;;; Commentary:
 
 ;; 
+;; TODO: clone lispm PEEK -- both as a menu to dispatch to other utilities,
+;; and its functionality to examine system internals
 
 ;;; Code:
 
