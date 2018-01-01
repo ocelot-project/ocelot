@@ -1,3 +1,6 @@
+;; TODO: make this file byte compile properly
+;; it needs the definition of the `evil-define-key' macro
+;; add a pinned evil as a compile dependency?
 (evil-define-key 'normal exwm-mode-map "h" 'exwm-evil-left)
 (evil-define-key 'normal exwm-mode-map "j" 'exwm-evil-down)
 (evil-define-key 'normal exwm-mode-map "k" 'exwm-evil-up)

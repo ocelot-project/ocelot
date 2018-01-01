@@ -1,3 +1,36 @@
+;; EXWM declarations
+(defvar exwm-frame-before-move-window)
+
+;; Evil declarations
+(declare-function evil-force-normal-state "ext:evil-commands.el")
+(declare-function evil-emacs-state "ext:evil-states.el")
+(declare-function evil-window-left "ext:evil-commands.el")
+(declare-function evil-window-down "ext:evil-commands.el")
+(declare-function evil-window-up "ext:evil-commands.el")
+(declare-function evil-window-right "ext:evil-commands.el")
+(declare-function evil-window-move-far-left "ext:evil-commands.el")
+(declare-function evil-window-move-very-bottom "ext:evil-commands.el")
+(declare-function evil-window-move-very-top "ext:evil-commands.el")
+(declare-function evil-window-move-far-right "ext:evil-commands.el")
+
+;; Spacemacs declarations
+(declare-function hidden-mode-line-mode "ext:core-funcs.el")
+(declare-function spacemacs/default-pop-shell "ext:funcs.el")
+(declare-function spacemacs/shrink-window-horizontally "keybindings.el")
+(declare-function spacemacs/shrink-window "keybindings.el")
+(declare-function spacemacs/enlarge-window "keybindings.el")
+(declare-function spacemacs/enlarge-window-horizontally "keybindings.el")
+
+;; winner.el declarations
+(declare-function winner-undo "ext:winner.el")
+(declare-function winner-redo "ext:winner.el")
+
+;; Helm declarations
+(declare-function helm-mini "helm-buffers.el")
+
+(declare-function exwm-input-char-mode "ocelot-defaults.el")
+(declare-function exwm-input-line-mode "ocelot-defaults.el")
+
 (require 'exwm nil 'noerror)
 
 (defvar exwm--terminal-command "xterm"
@@ -248,7 +281,7 @@ Can show completions at point for COMMAND using helm or ido"
     (interactive)
     (with-current-buffer (window-buffer)
       (when (eq major-mode 'exwm-mode)
-        (if (equal (second (second mode-line-process)) "line")
+        (if (equal (cadr (cadr mode-line-process)) "line")
             (exwm-input-char-mode)
           (exwm-input-line-mode)))))
 

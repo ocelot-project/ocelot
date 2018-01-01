@@ -1,5 +1,34 @@
+;; Declarations for the variables defined in ocelot-system.el
+(defvar ocelot-early-boot-background-color)
+(defvar ocelot-early-boot-foreground-color)
+(defvar ocelot-software-versions)
+(defvar ocelot-pinned-packages)
+(defvar ocelot-frozen-packages)
+(defvar ocelot-spacemacs-layer-path)
 
-(setq ocelot-running-graphically (member "--ocelot-graphical" command-line-args))
+;; Spacemacs declarations
+(defvar dotspacemacs-configuration-layer-path)
+(defvar dotspacemacs-frozen-packages)
+(declare-function configuration-layer//is-package-orphan
+                  "ext:core-configuration-layer.el")
+(declare-function configuration-layer/update-packages
+                  "ext:core-configuration-layer.el")
+(declare-function configuration-layer/discover-layers
+                  "ext:core-configuration-layer.el")
+
+(declare-function
+ configuration-layer//is-package-orphan@ocelot-spacemacs-pinning-hack
+ "ocelot-startup.el")
+(declare-function
+ configuration-layer/update-packages@ocelot-spacemacs-frozen-package-hack
+ "ocelot-startup.el")
+(declare-function
+ configuration-layer/discover-layers@ocelot-spacemacs-system-layer-hack
+ "ocelot-startup.el")
+
+(defvar ocelot-running-graphically
+  (member "--ocelot-graphical" command-line-args)
+  "Non-nil if this instance of Ocelot is managing a graphical UI.")
 
 (when ocelot-running-graphically
   (setq command-line-args (delete "--ocelot-graphical" command-line-args))
