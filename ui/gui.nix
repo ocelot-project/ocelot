@@ -60,9 +60,6 @@ in
           cp ${./configs/dot_xscreensaver} $HOME/.xscreensaver
           chmod 644 $HOME/.xscreensaver
           fi
-          if [ ! -e "$HOME/.emacs.d" ]; then
-          tar --directory $HOME -xvzf ${./configs/spacemacs.tar.gz}
-          fi
 
           xsetroot -solid black &
           xscreensaver -nosplash &

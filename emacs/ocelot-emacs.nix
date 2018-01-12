@@ -1,5 +1,7 @@
-{ lib, emacsPackagesNg, emacs, writeText,
+{ lib, emacsPackagesNg, emacs, stdenv, git,
+  writeText, writeScript, fetchFromGitHub,
   versioning ? { system.Ocelot.version = "0.1"; },
+  globalDistribution, userDistributions ? {},
   earlyBootBackgroundColor ? "#110024",
   earlyBootForegroundColor ? "#FFFFFF" }:
 
@@ -20,14 +22,55 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
   elpaPinned = import ./epkgs/elpa-pinned.nix {
     inherit (self) callPackage;
   };
+  orgPinned = import ./epkgs/org-pinned.nix {
+    inherit (self) callPackage;
+  };
+  melpaPinned = import ./epkgs/melpa-pinned.nix {
+    inherit (self) callPackage;
+  };
+  highlight = import ./epkgs/highlight.nix {
+    inherit (self) callPackage;
+  };
   ocelot-system = import ./epkgs/ocelot-system.nix {
     inherit lib;
     inherit (self) callPackage;
+    inherit stdenv;
+    inherit git;
     inherit writeText;
+    inherit writeScript;
     inherit versioning;
     inherit earlyBootBackgroundColor;
     inherit earlyBootForegroundColor;
+    inherit globalDistribution;
+    inherit userDistributions;
+    inherit (self) elpaPinned;
+    inherit (self) orgPinned;
+    inherit (self) melpaPinned;
+    inherit (self) highlight;
     exwm = self.elpaPinned.exwm;
+    help-fns-plus = import ./epkgs/help-fns-plus.nix {
+      inherit (self) callPackage;
+    };
+    hide-comnt = import ./epkgs/hide-comnt.nix {
+      inherit (self) callPackage;
+    };
+    info-plus = import ./epkgs/info-plus.nix {
+      inherit (self) callPackage;
+    };
+    evil-unimpaired = import ./epkgs/evil-unimpaired.nix {
+      inherit (self) callPackage;
+      spacemacs = import ./distro/spacemacs.nix {
+        inherit fetchFromGitHub;
+      };
+      dash = self.melpaPinned.dash;
+      f = self.melpaPinned.f;
+    };
+    spacemacs = import ./distro/spacemacs.nix {
+      inherit fetchFromGitHub;
+    };
+    prelude = import ./distro/prelude.nix {
+      inherit fetchFromGitHub;
+    };
   };
   ocelot = import ./epkgs/ocelot-epkg.nix {
     inherit (self) callPackage;

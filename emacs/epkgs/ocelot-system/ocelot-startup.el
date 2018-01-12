@@ -5,6 +5,8 @@
 (defvar ocelot-pinned-packages)
 (defvar ocelot-frozen-packages)
 (defvar ocelot-spacemacs-layer-path)
+(defvar ocelot-spacemacs-repo-script)
+(defvar ocelot-prelude-repo-script)
 
 ;; Spacemacs declarations
 (defvar dotspacemacs-configuration-layer-path)
@@ -25,6 +27,7 @@
 (declare-function
  configuration-layer/discover-layers@ocelot-spacemacs-system-layer-hack
  "ocelot-startup.el")
+(declare-function ocelot-dotfile-installer "ocelot-installer.el")
 
 (defvar ocelot-running-graphically
   (member "--ocelot-graphical" command-line-args)
@@ -128,6 +131,21 @@ See also `ocelot-version'"
     (when (eq arg 4)
       (kill-new formatted))
     formatted))
+
+(defun ocelot-spacemacs-reset-repo ()
+    (interactive)
+  (compile ocelot-spacemacs-repo-script))
+
+(defun ocelot-prelude-reset-repo ()
+    (interactive)
+  (compile ocelot-prelude-repo-script))
+
+(when (and (not (file-exists-p "~/.emacs.d/init.el"))
+           (not (file-exists-p "~/.emacs.d/init.elc"))
+           (not (file-exists-p "~/.emacs"))
+           (not (file-exists-p "~/.emacs.el")))
+  (require 'ocelot-installer)
+  (ocelot-dotfile-installer))
 
 ;; Spacemacs package pinning and freezing patches, and a hack to
 ;; add a layer path.
