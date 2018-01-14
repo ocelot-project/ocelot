@@ -69,5 +69,11 @@ in
 
     # Hide the mouse pointer when typing
     services.xbanish.enable = true;
+    # graphical-session.target isn't reliable; thanks systemd
+    # prevent xbanish from respawning too quickly when it can't
+    # grab a DISPLAY
+    # TODO: make xbanish exit before the graphical session does
+    # (or ditch systemd)
+    systemd.user.services.xbanish.serviceConfig.RestartSec = mkForce 3;
   };
 }
