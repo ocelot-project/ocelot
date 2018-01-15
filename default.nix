@@ -46,6 +46,9 @@ with lib;
       ag # helm-ag and Spacemacs smart search
       poppler # DocView mode (PDF)
       poppler_utils # DocView mode (PDF)
+
+      # System utilities:
+      pv # A modernized `dd`
     ];
 
     fonts = {

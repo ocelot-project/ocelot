@@ -1,0 +1,80 @@
+* Making an Ocelot live system with persistent storage
+
+| Device File | Image File |
+|-------------+------------|
+|             |            |
+
+| Partition File | Filesystem | Size |
+|----------------+------------+------|
+|                | FAT32      |      |
+|                | EFI        |      |
+
+#+BEGIN_SRC shell
+  DEVICE="<<device>>"
+  DATA_PARTITION="<<partition[0]>>"
+  BOOT_PARTITION="<<partition[1]>>"
+  IMAGE="<<image>>"
+  TMP_DIR=/tmp/ocelot/`whoami`/make-live
+#+END_SRC
+
+Make two partitions: a storage partition of any size you want, and a bootable
+partition of type ~EFI System~ which is at least 4GB in size and is flagged as
+bootable in the MBR. If you want to be able to mount your storage partition on
+Windows, make sure it's the first partition on the drive and has type
+~W95 FAT32~ (MBR type 0x0b).
+#+BEGIN_SRC shell
+  umount /dev/$DEVICE*;
+  fdisk $DEVICE;
+  umount /dev/$DEVICE*;
+  partprobe
+#+END_SRC
+
+Format and label the two partitions. The data partition should be labeled
+~OCELOT_DATA~ so that the live system can automatically mount it, and it can use
+any filesystem that the live system can mount (but it should be FAT32 if you
+care about interoperability). The bootable partition needs to be FAT32, and must
+be labeled ~_OCELOTLIVE~.
+#+BEGIN_SRC shell
+  umount /dev/$DEVICE*;
+  mkfs.fat -F32 -n "OCELOT_DATA" $DATA_PARTITION &&
+  mkfs.fat -F32 -n "_OCELOTLIVE" $BOOT_PARTITION
+#+END_SRC
+
+Mount the live system image, then copy its contents to the _OCELOTLIVE
+partition.
+#+BEGIN_SRC shell
+  umount $BOOT_PARTITION
+  mkdir -p $TMP_DIR/image &&
+  mkdir -p $TMP_DIR/device &&
+
+  mount -o loop $IMAGE $TMP_DIR/image &&
+  mount $BOOT_PARTITION $TMP_DIR/device &&
+  rm -rf $TMP_DIR/device/* &&
+  cp -a $TMP_DIR/image/* $TMP_DIR/device;
+
+  umount $TMP_DIR/image
+  umount $TMP_DIR/device
+#+END_SRC
+
+The EFI bootloader should be in place already, under ~_OCELOTLIVE/EFI/boot~. For
+BIOS booting support, you need to install the syslinux MBR bootloader onto the
+device, using the isolinux configuration files already in place from the live
+system image.
+#+BEGIN_SRC shell
+  umount $BOOT_PARTITION
+  mkdir -p $TMP_DIR/device &&
+      mount $BOOT_PARTITION $TMP_DIR/device &&
+      extlinux --install $TMP_DIR/device/isolinux &&
+      cp $TMP_DIR/device/isolinux/isolinux.cfg $TMP_DIR/device/isolinux/syslinux.cfg;
+
+  cp $TMP_DIR/device/isolinux/mbr.bin $TMP_DIR;
+  umount $TMP_DIR/device &&
+      dd bs=440 count=1 if=$TMP_DIR/mbr.bin of=$DEVICE
+#+END_SRC
+
+Your live system should now be usable. It is highly recommended to copy the
+Ocelot source code into the =ocelot= directory in the root of your data
+partition, so that you can write patches for the system and load them with
+=nixos-rebuild switch=. The live system is configured to look for its source
+under =/data/ocelot=, which is within the mount point for the partition labeled
+as =OCELOT_DATA=.
