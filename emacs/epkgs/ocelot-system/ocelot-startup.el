@@ -1,6 +1,7 @@
 ;; Declarations for the variables defined in ocelot-system.el
 (defvar ocelot-early-boot-background-color)
 (defvar ocelot-early-boot-foreground-color)
+(defvar ocelot-credentials-timeout)
 (defvar ocelot-software-versions)
 (defvar ocelot-spacemacs-repo-script)
 (defvar ocelot-prelude-repo-script)
@@ -19,6 +20,8 @@ functions to work as part of a Nix-style operating system,
 defines various default and system-provided settings, and
 initializes the GUI if the session is graphical."
   (require 'ocelot-core-patches)
+
+  (setq password-cache-expiry (* ocelot-credentials-timeout 60))
 
   (when ocelot-running-graphically
     (setq command-line-args (delete "--ocelot-graphical" command-line-args))

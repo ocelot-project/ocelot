@@ -3,7 +3,8 @@
   versioning ? { system.Ocelot.version = "0.1"; },
   globalDistribution, userDistributions ? {},
   earlyBootBackgroundColor ? "#110024",
-  earlyBootForegroundColor ? "#FFFFFF" }:
+  earlyBootForegroundColor ? "#FFFFFF",
+  credentialsTimeout ? 5}:
 
 let
 ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
@@ -41,6 +42,7 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
     inherit versioning;
     inherit earlyBootBackgroundColor;
     inherit earlyBootForegroundColor;
+    inherit credentialsTimeout;
     inherit globalDistribution;
     inherit userDistributions;
     inherit (self) elpaPinned;

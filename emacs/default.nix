@@ -45,6 +45,7 @@ in
         earlyBootForegroundColor = cfg.earlyBootForegroundColor;
         earlyBootBackgroundColor = cfg.earlyBootBackgroundColor;
         globalDistribution = config.ocelot.emacs.distribution;
+        credentialsTimeout = config.ocelot.security.credentialsTimeout;
       };
     };
   };

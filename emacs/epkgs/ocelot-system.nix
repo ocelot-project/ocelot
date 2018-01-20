@@ -5,7 +5,7 @@
   exwm, help-fns-plus, hide-comnt, info-plus, evil-unimpaired, highlight,
   globalDistribution, userDistributions,
   elpaPinned, orgPinned, melpaPinned, spacemacs, prelude,
-  earlyBootBackgroundColor, earlyBootForegroundColor }:
+  earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout }:
 
 with lib;
 
@@ -45,6 +45,8 @@ ocelotSystemCfg = writeText "ocelot-system.el" ''
   "A list of system-owned packages which shouldn't be updated.")
   (defvar ocelot-spacemacs-layer-path "${../distro/spacemacs-layers}/"
   "Where Spacemacs should look for system-owned configuration layers.")
+  (defvar ocelot-credentials-timeout ${toString credentialsTimeout}
+  "How long the system says credentials should stay cached (in minutes).")
 
   (defvar ocelot-software-versions (list
   ${versionsToPairs versioning.system}
