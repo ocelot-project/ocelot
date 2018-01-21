@@ -32,6 +32,11 @@
       (spacemacs/set-leader-keys "Sam" 'ocelot-mounted)
       (spacemacs/declare-prefix "Sd" "disks")
       (spacemacs/set-leader-keys "Sdm" 'ocelot-mount-all)
-      (spacemacs/set-leader-keys "Sdu" 'ocelot-unmount-all))))
+      (spacemacs/set-leader-keys "Sdu" 'ocelot-unmount-all)
+
+      (spacemacs/declare-prefix "Ss" "session")
+      (spacemacs/set-leader-keys "Ssq" 'ocelot-logout)
+      (spacemacs/set-leader-keys "SsP" 'ocelot-poweroff)
+      (spacemacs/set-leader-keys "SsR" 'ocelot-reboot))))
 
 ;;; packages.el ends here
