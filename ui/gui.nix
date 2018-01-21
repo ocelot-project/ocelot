@@ -17,6 +17,7 @@ in
       xscreensaver
       xorg.setxkbmap
       xbanish
+      alacritty
 
       ghostscriptX # DocView mode (PDF)
       unoconv # DocView mode (LibreOffice/MS formats)

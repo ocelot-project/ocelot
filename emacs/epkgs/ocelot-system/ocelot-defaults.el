@@ -33,8 +33,11 @@
 
 (require 'exwm nil 'noerror)
 
-(defvar exwm--terminal-command "xterm"
-  "Terminal command to run.")
+(defvar exwm--primary-terminal-command "alacritty"
+  "The primary terminal program to run.")
+
+(defvar exwm--secondary-terminal-command "xterm"
+  "The secondary terminal program to run.")
 
 (defvar exwm--locking-command "xscreensaver-command -lock"
   "Command to run when locking session")
@@ -71,7 +74,9 @@
           command (pop bindings))))
 
 (exwm-bind-command
- "<s-return>"  exwm--terminal-command)
+ "<s-return>"  exwm--primary-terminal-command)
+(exwm-bind-command
+ "<S-s-return>" exwm--secondary-terminal-command)
 
 ;; All buffers created in EXWM mode are named "*EXWM*". You may want to change
 ;; it in `exwm-update-class-hook' and `exwm-update-title-hook', which are run
