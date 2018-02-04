@@ -5,13 +5,19 @@
   exwm, help-fns-plus, hide-comnt, info-plus, evil-unimpaired, highlight,
   globalDistribution, userDistributions,
   elpaPinned, orgPinned, melpaPinned, spacemacs, prelude,
-  earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout }:
+  earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout,
+  xrandrHeads }:
 
 with lib;
 
 let
   versionsToPairs = attrs: concatStringsSep "\n" (
 mapAttrsToList (name: value: "(cons '${name} \"${value.version}\")") attrs);
+
+workspacesList = xheads: concatMapStrings (monitor:
+  concatMapStringsSep "\n" (workspace: "${toString workspace} \"${monitor.output}\"")
+    monitor.workspaces)
+    (builtins.filter (x: (builtins.isAttrs x)) xheads);
 
 spacemacsRepoScript = writeScript "spacemacs-reset-repo.sh" ''
   #!${stdenv.shell}
@@ -60,6 +66,11 @@ ocelotSystemCfg = writeText "ocelot-system.el" ''
 
   (defvar ocelot-spacemacs-repo-script "${spacemacsRepoScript}")
   (defvar ocelot-prelude-repo-script "${preludeRepoScript}")
+
+  (defvar ocelot-workspace-plist
+  '(
+  ${workspacesList xrandrHeads})
+  "The system-defined plist mapping framebuffers to workspaces.")
 
   (declare-function ocelot "ocelot-startup.el")
 

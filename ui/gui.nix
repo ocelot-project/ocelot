@@ -51,9 +51,9 @@ in
         ''
           xrdb -merge "$HOME/.Xresources"
           ${pkgs.xlibs.xset}/bin/xset r rate 200 30 # Set the keyboard repeat rate
-          ${optionalString cfg.bindCapsToEscape
+          ${optionalString cfg.keyboard.bindCapsToEscape
           "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:escape"}
-          ${optionalString cfg.bindCapsToControl
+          ${optionalString cfg.keyboard.bindCapsToControl
           "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps"}
 
           # TODO: manage mutable state much better than this

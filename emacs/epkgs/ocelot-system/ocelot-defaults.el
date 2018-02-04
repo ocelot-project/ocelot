@@ -359,7 +359,7 @@ Can show completions at point for COMMAND using helm or ido"
   (load "ocelot-evil-defaults.el" nil nil t))
 
 (require 'exwm-randr nil 'noerror)
-(setq exwm-randr-workspace-output-plist '(0 "VGA1"))
+(setq exwm-randr-workspace-output-plist ocelot-workspace-plist)
 (exwm-randr-enable)
 
 (provide 'ocelot-defaults)

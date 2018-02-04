@@ -34,6 +34,7 @@ with lib;
     options = [{
       emacs.distribution = mkOption {
         type = types.string;
+        default = "global";
         description = ''
           Per-user emacs configuration distribution setting. See
           `options.ocelot.emacs.distribution` for the global

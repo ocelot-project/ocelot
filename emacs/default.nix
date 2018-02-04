@@ -46,6 +46,7 @@ in
         earlyBootBackgroundColor = cfg.earlyBootBackgroundColor;
         globalDistribution = config.ocelot.emacs.distribution;
         credentialsTimeout = config.ocelot.security.credentialsTimeout;
+        xrandrHeads = config.services.xserver.xrandrHeads;
       };
     };
   };

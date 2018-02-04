@@ -4,7 +4,8 @@
   globalDistribution, userDistributions ? {},
   earlyBootBackgroundColor ? "#110024",
   earlyBootForegroundColor ? "#FFFFFF",
-  credentialsTimeout ? 5}:
+  credentialsTimeout ? 5,
+  xrandrHeads ? []}:
 
 let
 ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
@@ -43,6 +44,7 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
     inherit earlyBootBackgroundColor;
     inherit earlyBootForegroundColor;
     inherit credentialsTimeout;
+    inherit xrandrHeads;
     inherit globalDistribution;
     inherit userDistributions;
     inherit (self) elpaPinned;
