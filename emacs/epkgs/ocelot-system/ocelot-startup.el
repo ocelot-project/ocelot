@@ -20,6 +20,7 @@ functions to work as part of a Nix-style operating system,
 defines various default and system-provided settings, and
 initializes the GUI if the session is graphical."
   (require 'ocelot-core-patches)
+  (require 'ocelot-patches)
 
   (setq password-cache-expiry (* ocelot-credentials-timeout 60))
 
