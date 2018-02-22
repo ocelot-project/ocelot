@@ -1,5 +1,4 @@
-;; EXWM declarations
-(defvar exwm-frame-before-move-window)
+(defvar ocelot-workspace-plist)
 
 ;; Evil declarations
 (declare-function evil-force-normal-state "ext:evil-commands.el")
@@ -191,11 +190,11 @@ Can show completions at point for COMMAND using helm or ido"
 (define-advice exwm-workspace-move-window
     (:around (move-window workspace-num)
              focus-fix)
-  (setq exwm-frame-before-move-window (selected-frame))
-  (funcall move-window workspace-num)
-  (select-frame-set-input-focus exwm-frame-before-move-window t)
-  (when (fboundp 'powerline-set-selected-window)
-    (powerline-set-selected-window)))
+  (let ((frame-before-move (selected-frame)))
+    (funcall move-window workspace-num)
+    (select-frame-set-input-focus frame-before-move t)
+    (when (fboundp 'powerline-set-selected-window)
+      (powerline-set-selected-window))))
 
 ;; Set bindings to move the current window to another workspace,
 ;; xmonad style.
