@@ -40,10 +40,13 @@ in
           enable = true;
           theme = ./ocelot-slim-theme.tar.gz;
 
-          # Hide the "Session: DM+WM" text
+          # Hide the "Session: DM+WM" text, and fix utmp/wtmp
           extraConfig = ''
             session_x -1000
             session_y -1000
+
+            sessionstart_cmd ${pkgs.xorg.sessreg}/bin/sessreg -a -l $DISPLAY %user
+            sessionstop_cmd ${pkgs.xorg.sessreg}/bin/sessreg -d -l $DISPLAY %user
           '';
         };
 
