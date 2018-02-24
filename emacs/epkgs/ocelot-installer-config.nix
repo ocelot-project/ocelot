@@ -169,6 +169,7 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.smart-mode-line}
   ${packageToPlist melpaPinned.smartparens}
   ${packageToPlist melpaPinned.smartrep}
+  ;; TODO: find a more reliable undo-tree mirror?
   ${packageToPlist melpaPinned.undo-tree}
   ${packageToPlist melpaPinned.volatile-highlights}
   ${packageToPlist melpaPinned.which-key}

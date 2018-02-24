@@ -17,7 +17,9 @@ with lib;
         emacs.Emacs.version = pkgs.emacs.emacs.version;
         application = {};
         package-management.Nix.version = pkgs.nix.version;
-        base-system.NixOS.version = config.system.nixosRelease;
+        base-system.NixOS.version = (if builtins.hasAttr "nixos" config.system
+          then config.system.nixos.release # as of 18.03: Feb 23, 2018
+          else config.system.nixosRelease);
         kernel.Linux.version = pkgs.linux.version;
         platform.Platform.version = builtins.head
           (builtins.match "(.*)-.*" builtins.currentSystem);
