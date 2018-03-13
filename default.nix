@@ -48,6 +48,7 @@ with lib;
       ag # helm-ag and Spacemacs smart search
       poppler # DocView mode (PDF)
       poppler_utils # DocView mode (PDF)
+      ctags # Exuberant Ctags, for building tags files
 
       # System utilities:
       pv # A modernized `dd`
