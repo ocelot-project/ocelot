@@ -41,7 +41,14 @@ initializes the GUI if the session is graphical."
     (require 'exwm nil 'noerror)
     (with-eval-after-load 'exwm
       (require 'ocelot-defaults)
-      (exwm-enable))))
+      (exwm-enable)))
+
+  (when (and (not (file-exists-p "~/.emacs.d/init.el"))
+             (not (file-exists-p "~/.emacs.d/init.elc"))
+             (not (file-exists-p "~/.emacs"))
+             (not (file-exists-p "~/.emacs.el")))
+    (require 'ocelot-installer)
+    (ocelot-dotfile-installer)))
 
 (defun ocelot-version (&optional arg)
   "Return an alist of system software stack versions.
@@ -53,12 +60,12 @@ The returned alist is of the form (SOFTWARE . VERSION), where
 SOFTWARE is the software name in symbol form, and VERSION is
 a string containing that software's version number. The order
 of the returned alist is significant; the canonical order is
-meant to represent the meant to represent the layers of the
-compiled system, with high-level components in the front of
-the alist and low-level components at the back of the list,
-and the Ocelot and Emacs versions taking the two frontmost
-positions for convenience (these are the two most relevant
-versions when the information is read by humans).
+meant to represent the layers of the compiled system, with
+high-level components in the front of the alist and low-level
+components at the back of the list, and the Ocelot and Emacs
+versions taking the two frontmost positions for convenience
+(these are the two most relevant versions when the information
+is read by humans).
 
 See also `ocelot-software-versions'."
   (interactive "p")
@@ -130,12 +137,5 @@ See also `ocelot-version'"
 (defun ocelot-prelude-reset-repo ()
     (interactive)
   (compile ocelot-prelude-repo-script))
-
-(when (and (not (file-exists-p "~/.emacs.d/init.el"))
-           (not (file-exists-p "~/.emacs.d/init.elc"))
-           (not (file-exists-p "~/.emacs"))
-           (not (file-exists-p "~/.emacs.el")))
-  (require 'ocelot-installer)
-  (ocelot-dotfile-installer))
 
 (provide 'ocelot-startup)

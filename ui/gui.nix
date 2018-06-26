@@ -20,7 +20,7 @@ in
       alacritty
 
       ghostscriptX # DocView mode (PDF)
-      unoconv # DocView mode (LibreOffice/MS formats)
+      # unoconv # DocView mode (LibreOffice/MS formats)
     ];
 
     services.xserver = {

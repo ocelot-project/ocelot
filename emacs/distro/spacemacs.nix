@@ -3,6 +3,6 @@
 fetchFromGitHub {
   owner = "syl20bnr";
   repo = "spacemacs";
-  rev = "4bb4cb46968e5bbb98fffd480c8c822269fced4f";
-  sha256 = "0b20sj5d2dflwkrdyrc6g1fg3c4mzh8al4ppxav7x2flk86sajyc";
+  rev = "582f9aa45c2c90bc6ec98bccda33fc428e4c6d48";
+  sha256 = "0m634adqnwqvi8d7qkq7nh8ivfz6cx90idvwd2wiylg4w1hly252";
 }

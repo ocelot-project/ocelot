@@ -1,7 +1,7 @@
 { writeText,
   spacemacs, prelude, globalDistribution,
   elpaPinned, melpaPinned, orgPinned,
-  help-fns-plus, hide-comnt, info-plus, evil-unimpaired, highlight }:
+  evil-unimpaired, highlight }:
 
 let
 packageToPlist =
@@ -36,7 +36,7 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.elisp-slime-nav}
   ${packageToPlist melpaPinned.epl}
   ${packageToPlist melpaPinned.goto-chg}
-  ${packageToPlist melpaPinned.undo-tree}
+  ${packageToPlist elpaPinned.undo-tree}
   ${packageToPlist melpaPinned.evil}
   ${packageToPlist melpaPinned.evil-escape}
   ${packageToPlist melpaPinned.evil-visualstar}
@@ -55,10 +55,8 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.hydra}
   ${packageToPlist melpaPinned.macrostep}
   ${packageToPlist melpaPinned.pcre2el}
-  ${packageToPlist melpaPinned.undo-tree}
   ${packageToPlist melpaPinned.use-package}
   ${packageToPlist melpaPinned.which-key}
-  ${packageToPlist help-fns-plus}
   ${packageToPlist melpaPinned.counsel}
   ${packageToPlist melpaPinned.counsel-projectile}
   ${packageToPlist melpaPinned.ivy}
@@ -99,14 +97,12 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.flx-ido}
   ${packageToPlist melpaPinned.golden-ratio}
   ${packageToPlist melpaPinned.google-translate}
-  ${packageToPlist hide-comnt}
   ${packageToPlist melpaPinned.highlight-indentation}
   ${packageToPlist melpaPinned.highlight-numbers}
   ${packageToPlist melpaPinned.highlight-parentheses}
   ${packageToPlist melpaPinned.hl-todo}
   ${packageToPlist melpaPinned.hungry-delete}
   ${packageToPlist melpaPinned.indent-guide}
-  ${packageToPlist info-plus}
   ${packageToPlist melpaPinned.link-hint}
   ${packageToPlist melpaPinned.linum-relative}
   ${packageToPlist melpaPinned.lorem-ipsum}
@@ -147,14 +143,16 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.dash}
   ${packageToPlist melpaPinned.diff-hl}
   ${packageToPlist melpaPinned.diminish}
-  ${packageToPlist melpaPinned.discover-my-major}
+  ;; TODO: figure out why discover-my-major 404s on melpa
+  ;; {packageToPlist melpaPinned.discover-my-major}
   ${packageToPlist melpaPinned.easy-kill}
   ${packageToPlist melpaPinned.editorconfig}
   ${packageToPlist melpaPinned.epl}
   ${packageToPlist melpaPinned.expand-region}
   ${packageToPlist melpaPinned.flycheck}
   ${packageToPlist melpaPinned.gist}
-  ${packageToPlist melpaPinned.git-timemachine}
+  ;; TODO: figure out why git-timemachine 404s on melpa
+  ;; {packageToPlist melpaPinned.git-timemachine}
   ${packageToPlist melpaPinned.gitconfig-mode}
   ${packageToPlist melpaPinned.gitignore-mode}
   ${packageToPlist melpaPinned.god-mode}
@@ -170,7 +168,7 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.smartparens}
   ${packageToPlist melpaPinned.smartrep}
   ;; TODO: find a more reliable undo-tree mirror?
-  ${packageToPlist melpaPinned.undo-tree}
+  ${packageToPlist elpaPinned.undo-tree}
   ${packageToPlist melpaPinned.volatile-highlights}
   ${packageToPlist melpaPinned.which-key}
   ${packageToPlist melpaPinned.zenburn-theme}

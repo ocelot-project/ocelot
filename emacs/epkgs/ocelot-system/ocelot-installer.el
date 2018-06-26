@@ -117,7 +117,7 @@ under Prelude.
                       'full-name
                       directory-files-no-dot-files-regexp
                       'nosort))
-      (copy-directory pkg-dir "~/.emacs.d/elpa")
+      (copy-directory pkg-dir (file-name-as-directory "~/.emacs.d/elpa"))
       (ocelot-installer--directory-set-mode (file-name-as-directory
                                              "~/.emacs.d/elpa")
                                             (default-file-modes)))

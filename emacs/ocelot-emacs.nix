@@ -52,15 +52,6 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
     inherit (self) melpaPinned;
     inherit (self) highlight;
     exwm = self.elpaPinned.exwm;
-    help-fns-plus = import ./epkgs/help-fns-plus.nix {
-      inherit (self) callPackage;
-    };
-    hide-comnt = import ./epkgs/hide-comnt.nix {
-      inherit (self) callPackage;
-    };
-    info-plus = import ./epkgs/info-plus.nix {
-      inherit (self) callPackage;
-    };
     evil-unimpaired = import ./epkgs/evil-unimpaired.nix {
       inherit (self) callPackage;
       spacemacs = import ./distro/spacemacs.nix {

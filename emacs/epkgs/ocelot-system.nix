@@ -2,7 +2,7 @@
 # elisp used by Ocelot.
 # TODO: set `ocelot-pinned-packages` using Nix
 { lib, callPackage, stdenv, git, writeText, writeScript, versioning,
-  exwm, help-fns-plus, hide-comnt, info-plus, evil-unimpaired, highlight,
+  exwm, evil-unimpaired, highlight,
   globalDistribution, userDistributions,
   elpaPinned, orgPinned, melpaPinned, spacemacs, prelude,
   earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout,
@@ -73,10 +73,12 @@ ocelotSystemCfg = writeText "ocelot-system.el" ''
   "The system-defined plist mapping framebuffers to workspaces.")
 
   (declare-function ocelot "ocelot-startup.el")
+  (defvar ocelot-inhibit-startup nil)
 
   (when (not noninteractive)
   (require 'ocelot-startup)
-  (ocelot))
+  (unless ocelot-inhibit-startup
+  (ocelot)))
 
   (provide 'ocelot-system)
 '';
@@ -89,9 +91,6 @@ installerCfg = import ./ocelot-installer-config.nix {
   inherit elpaPinned;
   inherit melpaPinned;
   inherit orgPinned;
-  inherit help-fns-plus;
-  inherit hide-comnt;
-  inherit info-plus;
   inherit evil-unimpaired;
   inherit highlight;
 };
