@@ -25,6 +25,16 @@
 ;;; Code:
 
 (require 'ocelot-logging)
+(require 'dired)
+
+(defvar ocelot-trash-path (file-name-as-directory "~/.local/share/Trash")
+  "The path for the user's XDG trash directory.")
+(defvar ocelot-trash-command "rm -rf %s; rm -rf %s"
+  "The shell command `ocelot-empty-trash' uses to empty the trash.
+This is used as a format string, which receives two string arguments:
+the first is the wildcard path representing the contents of the files
+subdirectory, and the second is the wildcard path representing the
+contents of the info subdirectory.")
 
 ;;;###autoload
 (defun ocelot-mount-all ()
@@ -68,5 +78,41 @@ on the system."
            (message "Unmounting all disks...done.")
          (message "Unmounting all disks...%s." event))))))
 
+;;;###autoload
+(defun ocelot-dired-trash ()
+  "View the current user's trash directory in dired."
+  (interactive)
+  (cond
+   ((file-directory-p (file-name-as-directory
+                       (concat ocelot-trash-path "/files")))
+    (dired (file-name-as-directory
+            (concat ocelot-trash-path "/files"))))
+   ((file-directory-p ocelot-trash-path)
+    (dired ocelot-trash-path))
+   (t (user-error "Trash directory `%s' does not exist"
+                  ocelot-trash-path))))
+
+;;;###autoload
+(defun ocelot-empty-trash ()
+  "Empty the current user's trash directory."
+  (interactive)
+  (when (y-or-n-p "Empty the trash directory? ")
+    (message "Emptying the trash...")
+    (set-process-sentinel
+     (start-file-process-shell-command "Emptying the trash"
+                                       nil
+                                       (format ocelot-trash-command
+                                               (concat ocelot-trash-path
+                                                       "/files/*")
+                                               (concat ocelot-trash-path
+                                                       "/info/*")))
+     (lambda (proc event)
+       (when (memq (process-status proc) '(exit signal))
+         (setq event (substring event 0 -1))
+         (if (string-match "^finished" event)
+             (message "Emptying the trash...done.")
+           (message "Emptying the trash...%s." event)))))))
+
 (provide 'ocelot-disk-utils)
+
 ;;; ocelot-disk-utils.el ends here

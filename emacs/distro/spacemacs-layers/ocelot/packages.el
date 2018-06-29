@@ -30,9 +30,13 @@
 
       (spacemacs/declare-prefix "Sa" "applications")
       (spacemacs/set-leader-keys "Sam" 'ocelot-mounted)
+
       (spacemacs/declare-prefix "Sd" "disks")
       (spacemacs/set-leader-keys "Sdm" 'ocelot-mount-all)
       (spacemacs/set-leader-keys "Sdu" 'ocelot-unmount-all)
+      (spacemacs/declare-prefix "Sdt" "trash")
+      (spacemacs/set-leader-keys "Sdtt" 'ocelot-dired-trash)
+      (spacemacs/set-leader-keys "Sdtx" 'ocelot-empty-trash)
 
       (spacemacs/declare-prefix "Ss" "session")
       (spacemacs/set-leader-keys "Ssq" 'ocelot-logout)
