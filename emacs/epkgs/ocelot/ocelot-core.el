@@ -44,8 +44,8 @@ of nixpkgs."
   (let ((buffer "*Ocelot rebuild*")
         (default-directory "/sudo::/")
         (compilation-scroll-output t)
-        (rebuild-cmd "nixos-rebuild switch")
-        (upgrade-cmd "nixos-rebuild switch --upgrade"))
+        (rebuild-cmd "bash -l -c \"nixos-rebuild switch\"")
+        (upgrade-cmd "bash -l -c \"nixos-rebuild switch --upgrade\""))
     (compilation-start (if upgrade
                            upgrade-cmd
                          rebuild-cmd)
