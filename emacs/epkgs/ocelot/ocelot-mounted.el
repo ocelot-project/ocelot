@@ -42,7 +42,9 @@ devices Mounted knows about; each entry in that table is another hash
 table containing device information.")
 
 (defcustom ocelot-mounted-line-format "%1s %-35s %10s %10s %-20s\n"
-  "The format specifier used for each Mounted line.")
+  "The format specifier used for each Mounted line."
+  :type 'string
+  :group 'ocelot-mounted)
 
 (defvar ocelot-mounted-mode-map
   (let ((km (make-sparse-keymap)))
@@ -82,6 +84,7 @@ table containing device information.")
 
 ;; If evil loads, disable it for this mode by default
 (with-eval-after-load 'evil
+  (declare-function evil-set-initial-state "evil")
   (evil-set-initial-state 'ocelot-mounted-mode 'emacs))
 
 (defgroup ocelot-mounted-faces nil
