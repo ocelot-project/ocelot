@@ -69,6 +69,7 @@ with lib;
         ubuntu_font_family
         emacs-all-the-icons-fonts
         material-icons
+        twemoji-color-font
 
         # The most popular Google Fonts with Nix derivations:
         roboto
