@@ -30,7 +30,13 @@
   (interactive)
   (save-some-buffers)
   (when (yes-or-no-p "End your current session? ")
-    (mapc 'kill-buffer (buffer-list))
+    (mapc
+     (lambda (buf)
+       (when (eq 'exwm-mode
+                 (with-current-buffer buf
+                   major-mode))
+         (kill-buffer buf)))
+     (buffer-list))
     (kill-emacs)))
 
 ;;;###autoload
@@ -39,7 +45,14 @@
   (interactive)
   (save-some-buffers)
   (when (yes-or-no-p "Turn off this computer? ")
-    (mapc 'kill-buffer (buffer-list))
+    (mapc
+     (lambda (buf)
+       (when (eq 'exwm-mode
+                 (with-current-buffer buf
+                   major-mode))
+         (kill-buffer buf)))
+     (buffer-list))
+    (run-hooks 'kill-emacs-hook)
     (start-process "System Shutdown"
                    "*Ocelot shutdown log*"
                    "poweroff")))
@@ -50,7 +63,14 @@
   (interactive)
   (save-some-buffers)
   (when (yes-or-no-p "Reboot this computer? ")
-    (mapc 'kill-buffer (buffer-list))
+    (mapc
+     (lambda (buf)
+       (when (eq 'exwm-mode
+                 (with-current-buffer buf
+                   major-mode))
+         (kill-buffer buf)))
+     (buffer-list))
+    (run-hooks 'kill-emacs-hook)
     (start-process "System Reboot"
                    "*Ocelot shutdown log*"
                    "reboot")))
