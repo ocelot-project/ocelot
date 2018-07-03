@@ -41,6 +41,7 @@
       (spacemacs/declare-prefix "Ss" "session")
       (spacemacs/set-leader-keys "Ssq" 'ocelot-logout)
       (spacemacs/set-leader-keys "SsP" 'ocelot-poweroff)
-      (spacemacs/set-leader-keys "SsR" 'ocelot-reboot))))
+      (spacemacs/set-leader-keys "SsR" 'ocelot-reboot)
+      (spacemacs/set-leader-keys "Ssz" 'ocelot-session-lock))))
 
 ;;; packages.el ends here

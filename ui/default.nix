@@ -10,6 +10,7 @@ in
     ./gui.nix
     ./keyboard.nix
     ./disk-mounting.nix
+    ./locker.nix
   ];
 
   options.ocelot.ui = {

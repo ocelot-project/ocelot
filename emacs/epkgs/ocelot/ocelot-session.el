@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(defvar ocelot-locker-message "")
+
 ;;;###autoload
 (defun ocelot-logout ()
   "Save all buffers, then safely end the user's session."
@@ -74,6 +76,16 @@
     (start-process "System Reboot"
                    "*Ocelot shutdown log*"
                    "reboot")))
+
+;;;###autoload
+(defun ocelot-session-lock ()
+  "Securely lock the current terminal.
+This function should work on both graphical and textmode terminals."
+  (interactive)
+  (start-process-shell-command "Screen Locker"
+                               nil
+                               (format "physlock -m -p \"%s\""
+                                       ocelot-locker-message)))
 
 (provide 'ocelot-session)
 ;;; ocelot-session.el ends here

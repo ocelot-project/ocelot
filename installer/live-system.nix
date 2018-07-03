@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 
+# TODO: live system leaves its boot partition dirty when it shuts down
+
 with lib;
 
 {
@@ -29,6 +31,8 @@ with lib;
     };
   };
 
+  security.pam.services.ocelot.allowNullPassword = true;
+
   users.groups.users.gid = mkForce 100;
 
   services.xserver.displayManager.slim = {
@@ -55,16 +59,5 @@ with lib;
   services.printing = {
     enable = true;
     drivers = [ pkgs.gutenprint ];
-  };
-
-  systemd.services.apple-keyboard = {
-    description = "Reconfigure an Apple USB keyboard, if attached.";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      ExecStart = "${pkgs.stdenv.shell} -c \"echo 2 > /sys/module/hid_apple/parameters/fnmode\"";
-      ExecStop = "${pkgs.stdenv.shell} -c \"echo 1 > /sys/module/hid_apple/parameters/fnmode\"";
-    };
   };
 }

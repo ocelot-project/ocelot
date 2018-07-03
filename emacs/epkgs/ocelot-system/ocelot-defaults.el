@@ -30,6 +30,8 @@
 (declare-function exwm-input-char-mode "ocelot-defaults.el")
 (declare-function exwm-input-line-mode "ocelot-defaults.el")
 
+(declare-function ocelot-session-lock "ocelot-session.el")
+
 (require 'exwm nil 'noerror)
 
 (defvar exwm--primary-terminal-command "alacritty"
@@ -37,9 +39,6 @@
 
 (defvar exwm--secondary-terminal-command "xterm"
   "The secondary terminal program to run.")
-
-(defvar exwm--locking-command "xscreensaver-command -lock"
-  "Command to run when locking session")
 
 (defvar exwm-app-launcher--prompt "$ "
   "Prompt for the EXWM application launcher")
@@ -224,14 +223,7 @@ Can show completions at point for COMMAND using helm or ido"
 ;; Emacs.
 (exwm-input-set-key (kbd "s-e") #'exwm-app-launcher)
 
-;; Bind a key to call the screen locking command defined in `exwm--locking-command'.
-(exwm-input-set-key (kbd "s-Z")
-                    (lambda ()
-                      (interactive)
-                      (start-process-shell-command
-                       ""
-                       nil
-                       exwm--locking-command)))
+(exwm-input-set-key (kbd "s-Z") #'ocelot-session-lock)
 
 ;; The following example demonstrates how to set a key binding only available
 ;; in line mode. It's simply done by first push the prefix key to

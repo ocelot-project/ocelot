@@ -14,7 +14,7 @@ in
     environment.systemPackages = with pkgs; [
       xfontsel
       xdg_utils
-      xscreensaver
+      xss-lock
       xorg.setxkbmap
       xbanish
       alacritty
@@ -66,7 +66,11 @@ in
           fi
 
           xsetroot -solid black &
-          xscreensaver -nosplash &
+          ${(optionalString (cfg.locker.time > 0)) ''
+            xset s ${toString (cfg.locker.time * 60 + 10)} ${toString (cfg.locker.time * 60 + 10)}
+            xset dpms ${toString (cfg.locker.time * 60)} ${toString (cfg.locker.time * 60 + 10)} ${toString (cfg.locker.time * 60 + 10)}
+            xss-lock -- physlock -m -p "${cfg.locker.message}" &
+          ''}
         '';
       };
     };

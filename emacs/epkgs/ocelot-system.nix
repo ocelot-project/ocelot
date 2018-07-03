@@ -6,7 +6,7 @@
   globalDistribution, userDistributions,
   elpaPinned, orgPinned, melpaPinned, spacemacs, prelude,
   earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout,
-  xrandrHeads }:
+  xrandrHeads, lockerMessage }:
 
 with lib;
 
@@ -44,6 +44,9 @@ preludeRepoScript = writeScript "prelude-reset-repo.sh" ''
 ocelotSystemCfg = writeText "ocelot-system.el" ''
   (defvar ocelot-early-boot-background-color "${earlyBootBackgroundColor}")
   (defvar ocelot-early-boot-foreground-color "${earlyBootForegroundColor}")
+
+  (defvar ocelot-locker-message "${toString lockerMessage}"
+  "The informative message displayed by the screen locker.")
 
   (defvar ocelot-pinned-packages '(cl-generic exwm xelb ocelot-system ocelot)
   "A list of system-owned packages which shouldn't be overriden.")
