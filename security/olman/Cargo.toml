@@ -1,0 +1,20 @@
+[package]
+name = "olman"
+version = "0.1.0"
+authors = ["Jordan Mulcahey <snhjordy@gmail.com>"]
+
+[dependencies]
+lazy_static = "1.0"
+users = "0.6"
+getopts = "0.2"
+nix = "0.10"
+utmpx = { path = "utmpx" }
+libc = "0.2"
+slog = "2.2.3"
+slog-syslog = "0.11.0"
+regex = "1.0.0"
+pam-sys = "0.5.5"
+pwd = "1.3.0"
+toml = "0.4"
+serde = "1.0"
+serde_derive = "1.0"

@@ -1,0 +1,10 @@
+[package]
+name = "utmpx"
+version = "0.1.0"
+authors = ["Jordan Mulcahey <snhjordy@gmail.com>"]
+
+[dependencies]
+libc = "0.2"
+lazy_static = "1.0"
+num-traits = "0.2"
+num-derive = "0.2"
