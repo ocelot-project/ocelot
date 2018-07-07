@@ -3,7 +3,7 @@
 with lib;
 
 let
-  graphicalEmacsSession = pkgs.writeScript "emacs-graphical.sh" ''
+  graphicalEmacsSession = pkgs.writeScript "graphical-emacs.sh" ''
     xrdb -merge "$HOME/.Xresources"
     ${pkgs.xlibs.xset}/bin/xset r rate 200 30 # Set the keyboard repeat rate
     ${optionalString config.ocelot.ui.keyboard.bindCapsToEscape
