@@ -34,6 +34,10 @@ in
       allowAnyUser = true;
     };
 
+    # Since physlock uses its own virtual terminal, this option is safe
+    # to enable.
+    services.xserver.enableCtrlAltBackspace = true;
+
     boot.kernelParams = [ "consoleblank=300" ];
   };
 }

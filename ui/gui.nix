@@ -3,6 +3,35 @@
 with lib;
 
 let
+  graphicalEmacsSession = pkgs.writeScript "emacs-graphical.sh" ''
+    xrdb -merge "$HOME/.Xresources"
+    ${pkgs.xlibs.xset}/bin/xset r rate 200 30 # Set the keyboard repeat rate
+    ${optionalString config.ocelot.ui.keyboard.bindCapsToEscape
+    "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:escape"}
+    ${optionalString config.ocelot.ui.keyboard.bindCapsToControl
+    "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps"}
+
+    # TODO: manage mutable state much better than this
+    if [ ! -e "$HOME/.xscreensaver" ]; then
+    cp ${./configs/dot_xscreensaver} $HOME/.xscreensaver
+    chmod 644 $HOME/.xscreensaver
+    fi
+
+    xsetroot -solid black &
+    ${(optionalString (config.ocelot.ui.locker.time > 0)) ''
+      xset s ${toString (config.ocelot.ui.locker.time * 60 + 10)} ${toString (config.ocelot.ui.locker.time * 60 + 10)}
+      xset dpms ${toString (config.ocelot.ui.locker.time * 60)} ${toString (config.ocelot.ui.locker.time * 60 + 10)} ${toString (config.ocelot.ui.locker.time * 60 + 10)}
+      xss-lock -- physlock -m -p "${config.ocelot.ui.locker.message}" &
+    ''}
+    # TODO: write an elisp user service manager with automatic respawning
+    xbanish &
+
+    export VISUAL=${pkgs.emacs}/bin/emacsclient
+    export EDITOR="$VISUAL"
+    exec dbus-launch --exit-with-session ${pkgs.emacs}/bin/emacs \
+         --fullscreen --ocelot-graphical
+  '';
+
   cfg = config.ocelot.ui;
 in
 {
@@ -22,6 +51,12 @@ in
       ghostscriptX # DocView mode (PDF)
       # unoconv # DocView mode (LibreOffice/MS formats)
     ];
+
+    ocelot.ui.login.sessions = mkOrder 100 [{
+      name = "Graphical Emacs";
+      graphical = true;
+      command = "${graphicalEmacsSession}";
+    }];
 
     services.xserver = {
       enable = true;
@@ -52,36 +87,9 @@ in
 
         sessionCommands =
         ''
-          xrdb -merge "$HOME/.Xresources"
-          ${pkgs.xlibs.xset}/bin/xset r rate 200 30 # Set the keyboard repeat rate
-          ${optionalString cfg.keyboard.bindCapsToEscape
-          "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:escape"}
-          ${optionalString cfg.keyboard.bindCapsToControl
-          "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps"}
-
-          # TODO: manage mutable state much better than this
-          if [ ! -e "$HOME/.xscreensaver" ]; then
-          cp ${./configs/dot_xscreensaver} $HOME/.xscreensaver
-          chmod 644 $HOME/.xscreensaver
-          fi
-
-          xsetroot -solid black &
-          ${(optionalString (cfg.locker.time > 0)) ''
-            xset s ${toString (cfg.locker.time * 60 + 10)} ${toString (cfg.locker.time * 60 + 10)}
-            xset dpms ${toString (cfg.locker.time * 60)} ${toString (cfg.locker.time * 60 + 10)} ${toString (cfg.locker.time * 60 + 10)}
-            xss-lock -- physlock -m -p "${cfg.locker.message}" &
-          ''}
+          ${graphicalEmacsSession}
         '';
       };
     };
-
-    # Hide the mouse pointer when typing
-    services.xbanish.enable = true;
-    # graphical-session.target isn't reliable; thanks systemd
-    # prevent xbanish from respawning too quickly when it can't
-    # grab a DISPLAY
-    # TODO: make xbanish exit before the graphical session does
-    # (or ditch systemd)
-    systemd.user.services.xbanish.serviceConfig.RestartSec = mkForce 3;
   };
 }

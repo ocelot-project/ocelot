@@ -7,10 +7,11 @@ let
 in
 {
   imports = [
-    ./gui.nix
     ./keyboard.nix
-    ./disk-mounting.nix
     ./locker.nix
+    ./login
+    ./gui.nix
+    ./disk-mounting.nix
   ];
 
   options.ocelot.ui = {
@@ -34,5 +35,18 @@ in
         '';
       };
     }];
+  };
+
+  config = {
+    ocelot.ui.login.sessions = mkOrder 500 [
+      {
+       name = "Textmode Emacs";
+       command = "exec ${pkgs.emacs}/bin/emacs -nw";
+      }
+
+      {
+        name = "Textmode Shell";
+      }
+    ];
   };
 }
