@@ -70,6 +70,7 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
     };
   };
   ocelot = import ./epkgs/ocelot-epkg.nix {
+    inherit writeText;
     inherit (self) callPackage;
   };
 });

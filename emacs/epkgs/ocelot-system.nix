@@ -109,6 +109,9 @@ callPackage ({ melpaBuild, lib }: melpaBuild {
     cp ${ocelotSystemCfg} ocelot-system.el
     cp ${installerCfg} ocelot-installer-config.el
   '';
+  recipe = writeText "recipe" ''
+         (ocelot-system :fetcher git :url "localhost")
+  '';
   meta = {
     license = lib.licenses.free;
   };

@@ -159,7 +159,9 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.grizzl}
   ${packageToPlist melpaPinned.guru-mode}
   ${packageToPlist melpaPinned.imenu-anywhere}
-  ${packageToPlist melpaPinned.magit}
+  ;; TODO: patch magit to pull in git as a build dependency
+  ;;{packageToPlist melpaPinned.magit}
+  ;;{dependencyToPlist melpaPinned.magit-popup}
   ${packageToPlist melpaPinned.move-text}
   ${packageToPlist melpaPinned.operate-on-number}
   ${packageToPlist melpaPinned.ov}
@@ -181,7 +183,6 @@ writeText "ocelot-installer-config.el" ''
   ${dependencyToPlist melpaPinned.ht}
   ${dependencyToPlist elpaPinned.let-alist}
   ${dependencyToPlist melpaPinned.logito}
-  ${dependencyToPlist melpaPinned.magit-popup}
   ${dependencyToPlist melpaPinned.makey}
   ${dependencyToPlist melpaPinned.marshal}
   ${dependencyToPlist melpaPinned.pcache}
