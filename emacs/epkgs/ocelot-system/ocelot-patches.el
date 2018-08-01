@@ -14,4 +14,13 @@
   ;; work as expected (check against "sudo" and "doas").
   (add-to-list 'eshell-modules-list 'eshell-tramp))
 
+;; nix-mode patches
+(with-eval-after-load 'nix-mode
+  ;; nix-mode doesn't seem to add .nix files to auto-mode-alist
+  ;; anymore. Since Nix is one of our implementation languages,
+  ;; this is kind of a big deal for system development ergonomics.
+  ;; We'll make sure .nix files are associated with nix-mode in
+  ;; auto-mode-alist.
+  (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode)))
+
 (provide 'ocelot-patches)
