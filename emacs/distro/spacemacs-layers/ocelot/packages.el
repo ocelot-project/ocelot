@@ -42,6 +42,10 @@
       (spacemacs/set-leader-keys "Ssq" 'ocelot-logout)
       (spacemacs/set-leader-keys "SsP" 'ocelot-poweroff)
       (spacemacs/set-leader-keys "SsR" 'ocelot-reboot)
-      (spacemacs/set-leader-keys "Ssz" 'ocelot-session-lock))))
+      (spacemacs/set-leader-keys "Ssz" 'ocelot-session-lock)
+
+      (spacemacs/declare-prefix "Sh" "help")
+      (spacemacs/set-leader-keys "Sha" 'ocelot-about)
+      (spacemacs/set-leader-keys "Shv" 'ocelot-version))))
 
 ;;; packages.el ends here
