@@ -17,33 +17,6 @@ ${concatStringsSep "\n" (mapAttrsToList (n: v:
     ''
   ) sessions;
 
-  graphicalEmacsSession = pkgs.writeScript "emacs-session.sh" ''
-    xrdb -merge "$HOME/.Xresources"
-    ${pkgs.xlibs.xset}/bin/xset r rate 200 30 # Set the keyboard repeat rate
-    ${optionalString config.ocelot.ui.keyboard.bindCapsToEscape
-    "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:escape"}
-    ${optionalString config.ocelot.ui.keyboard.bindCapsToControl
-    "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps"}
-
-    # TODO: manage mutable state much better than this
-    if [ ! -e "$HOME/.xscreensaver" ]; then
-    cp ${../configs/dot_xscreensaver} $HOME/.xscreensaver
-    chmod 644 $HOME/.xscreensaver
-    fi
-
-    xsetroot -solid black &
-    ${(optionalString (config.ocelot.ui.locker.time > 0)) ''
-      xset s ${toString (config.ocelot.ui.locker.time * 60 + 10)} ${toString (config.ocelot.ui.locker.time * 60 + 10)}
-      xset dpms ${toString (config.ocelot.ui.locker.time * 60)} ${toString (config.ocelot.ui.locker.time * 60 + 10)} ${toString (config.ocelot.ui.locker.time * 60 + 10)}
-      xss-lock -- physlock -m -p "${config.ocelot.ui.locker.message}" &
-    ''}
-    xbanish &
-
-    export VISUAL=${pkgs.emacs}/bin/emacsclient
-    export EDITOR="$VISUAL"
-    exec dbus-launch --exit-with-session ${pkgs.emacs}/bin/emacs \
-         --fullscreen --ocelot-graphical
-  '';
   cfg = config.ocelot.ui.login;
 in
 
