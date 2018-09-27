@@ -7,6 +7,12 @@
 (defvar ocelot-prelude-repo-script)
 
 (declare-function ocelot-dotfile-installer "ocelot-installer.el")
+(declare-function ocelot-installer-clear-elpa "ocelot-installer.el")
+
+(defvar ocelot-restore-pkgs
+  (member "--ocelot-restore-pkgs" command-line-args)
+  "Non-nil if Ocelot should refresh Emacs' package cache from the
+network on startup.")
 
 (defvar ocelot-running-graphically
   (member "--ocelot-graphical" command-line-args)
@@ -23,6 +29,14 @@ initializes the GUI if the session is graphical."
   (require 'ocelot-patches)
 
   (setq password-cache-expiry (* ocelot-credentials-timeout 60))
+
+  (when ocelot-restore-pkgs
+    (setq command-line-args (delete "--ocelot-restore-pkgs" command-line-args))
+    (require 'ocelot-installer)
+
+    (message "Emptying package cache...")
+    (ocelot-installer-clear-elpa)
+    (message "Emptying package cache...done."))
 
   (when ocelot-running-graphically
     (setq command-line-args (delete "--ocelot-graphical" command-line-args))

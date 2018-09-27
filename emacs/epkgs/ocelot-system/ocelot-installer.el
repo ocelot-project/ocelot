@@ -127,4 +127,10 @@ under Prelude.
     (insert " Done.\n")
     (redisplay)))
 
+(defun ocelot-installer-clear-elpa ()
+    "Empty the .emacs.d elpa subdirectory, if it exists."
+  (when (file-directory-p (file-name-as-directory "~/.emacs.d/elpa"))
+    (move-file-to-trash (file-name-as-directory "~/.emacs.d/elpa"))
+    (make-directory "~/.emacs.d/elpa")))
+
 (provide 'ocelot-installer)
