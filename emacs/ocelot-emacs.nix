@@ -9,7 +9,7 @@
   lockerMessage}:
 
 let
-ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
+ocelotEmacs = emacsPackagesNg.overrideScope' (self: super: {
   emacs = emacs.overrideAttrs (attrs: {
     postInstall = (attrs.postInstall or "") + ''
       rm -f $out/share/emacs/site-lisp/site-start.elc
@@ -31,9 +31,9 @@ ocelotEmacs = emacsPackagesNg.overrideScope (super: self: {
   melpaPinned = import ./epkgs/melpa-pinned.nix {
     inherit (self) callPackage;
   };
-  highlight = import ./epkgs/highlight.nix {
-    inherit (self) callPackage;
-  };
+  # highlight = import ./epkgs/highlight.nix {
+  #   inherit (self) callPackage;
+  # };
   ocelot-system = import ./epkgs/ocelot-system.nix {
     inherit lib;
     inherit (self) callPackage;

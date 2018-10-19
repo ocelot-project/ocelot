@@ -1,7 +1,7 @@
 { writeText,
   spacemacs, prelude, globalDistribution,
   elpaPinned, melpaPinned, orgPinned,
-  evil-unimpaired, highlight }:
+  evil-unimpaired }:
 
 let
 packageToPlist =
@@ -38,7 +38,7 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.goto-chg}
   ${packageToPlist elpaPinned.undo-tree}
   ${packageToPlist melpaPinned.evil}
-  ${packageToPlist melpaPinned.evil-escape}
+  ;;{packageToPlist melpaPinned.evil-escape} Warning: (error "Package lacks a file header")
   ${packageToPlist melpaPinned.evil-visualstar}
   ${packageToPlist melpaPinned.exec-path-from-shell}
   ${packageToPlist melpaPinned.flx}
@@ -72,7 +72,7 @@ writeText "ocelot-installer-config.el" ''
   ${packageToPlist melpaPinned.column-enforce-mode}
   ${packageToPlist melpaPinned.define-word}
   ${packageToPlist melpaPinned.dumb-jump}
-  ${packageToPlist highlight}
+  ${packageToPlist melpaPinned.highlight}
   ${packageToPlist melpaPinned.eval-sexp-fu}
   ${packageToPlist melpaPinned.evil-anzu}
   ${packageToPlist melpaPinned.evil-args}

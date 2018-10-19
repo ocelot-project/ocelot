@@ -95,7 +95,6 @@ installerCfg = import ./ocelot-installer-config.nix {
   inherit melpaPinned;
   inherit orgPinned;
   inherit evil-unimpaired;
-  inherit highlight;
 };
 
 in
