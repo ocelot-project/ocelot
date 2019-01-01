@@ -492,17 +492,12 @@ fn olman() -> Result<(), OlmanError> {
                 // TODO: see if this needs to happen after setsid and
                 // TIOCSCTTY
                 if let Ok(mut utmpx) = session_utmpx() {
-                    eprintln!("updating utmpx");
                     update_utmpx(username,
                                  current_tty.into(),
                                  hostname.into(),
                                  &mut utmpx);
                     let _ = SYSTEM_UTMPX.lock().unwrap()
                         .write_entry(utmpx);
-                    eprintln!("done updating utmpx")
-                }
-                else {
-                    eprintln!("not updating utmpx");
                 }
 
                 session_proc
