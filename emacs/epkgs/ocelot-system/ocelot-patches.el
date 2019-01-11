@@ -1,4 +1,7 @@
 (defvar eshell-modules-list)
+(defvar helm-show-completion-display-function)
+
+(declare-function helm-show-completion-default-display-function "helm-elisp")
 
 ;; eshell patches
 (with-eval-after-load 'esh-module
@@ -13,6 +16,13 @@
   ;; If this is implemented, make sure pipes and redirection
   ;; work as expected (check against "sudo" and "doas").
   (add-to-list 'eshell-modules-list 'eshell-tramp))
+
+;; helm patches
+(with-eval-after-load 'helm-elisp
+  ;; Helm now sometimes uses new frames for completion. Vile.
+  ;; Prevent that from happening.
+  (setq helm-show-completion-display-function
+        #'helm-show-completion-default-display-function))
 
 ;; nix-mode patches
 (with-eval-after-load 'nix-mode
