@@ -1,5 +1,6 @@
 (defvar eshell-modules-list)
 (defvar helm-show-completion-display-function)
+(defvar nix-indent-function)
 
 (declare-function helm-show-completion-default-display-function "helm-elisp")
 
@@ -31,6 +32,14 @@
   ;; this is kind of a big deal for system development ergonomics.
   ;; We'll make sure .nix files are associated with nix-mode in
   ;; auto-mode-alist.
-  (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode)))
+  (add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
+
+  ;; Another ergonomics fix: nix-mode now defaults to the
+  ;; default emacs indentation function, which does a very
+  ;; poor job on Nix files. This changes it back to
+  ;; `nix-indent-line', which is consistently buggy but at
+  ;; least functions.
+  ;; TODO: just implement an indentation function?
+  (setq nix-indent-function 'nix-indent-line))
 
 (provide 'ocelot-patches)
