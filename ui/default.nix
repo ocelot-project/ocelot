@@ -34,18 +34,6 @@ in
     };
   };
 
-  # options.services.xserver.xrandrHeads = mkOption {
-  #   type = with types; either str (submodule {
-  #     options.workspaces = mkOption {
-  #       type = types.listOf types.int;
-  #       default = [];
-  #       description = ''
-  #       The list of EXWM workspaces assigned to this monitor.
-  #       '';
-  #     };
-  #   });
-  # };
-
   config = {
     ocelot.ui.login.sessions = mkOrder 500 [
       {

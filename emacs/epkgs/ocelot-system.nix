@@ -17,10 +17,6 @@ mapAttrsToList (name: value: "(cons '${name} \"${value.version}\")") attrs);
 workspacesList = workspaces: concatStringsSep "\n" (
   mapAttrsToList (monitor: wsList: concatMapStringsSep "\n"
   (workspace: "${toString workspace} \"${monitor}\"") wsList) workspaces);
-# workspacesList = xheads: concatMapStrings (monitor:
-#   concatMapStringsSep "\n" (workspace: "${toString workspace} \"${monitor.output}\"")
-#     monitor.workspaces)
-#     (builtins.filter (x: (builtins.isAttrs x)) xheads);
 
 spacemacsRepoScript = writeScript "spacemacs-reset-repo.sh" ''
   #!${stdenv.shell}
