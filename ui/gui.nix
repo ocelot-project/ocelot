@@ -10,6 +10,8 @@ let
     "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option caps:escape"}
     ${optionalString config.ocelot.ui.keyboard.bindCapsToControl
     "${pkgs.xorg.setxkbmap}/bin/setxkbmap -option ctrl:nocaps"}
+    # Configure scancode 135 (<menu>) to be right Hyper:
+    xmodmap -e "clear mod3" -e "keycode 135 = Hyper_R" -e "add mod3 = Hyper_R" &
 
     # TODO: manage mutable state much better than this
     if [ ! -e "$HOME/.xscreensaver" ]; then
