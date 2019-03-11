@@ -23,19 +23,28 @@ in
         Ocelot uses a text-based user interface.
       '';
     };
+
+    workspaces = mkOption {
+      type = types.attrsOf (types.listOf types.int);
+      default = [];
+      description = ''
+      An attribute set whose keys are RandR display names, and values are
+      lists of EXWM workspace numbers assigned to each display.
+      '';
+    };
   };
 
-  options.services.xserver.xrandrHeads = mkOption {
-    options = [{
-      workspaces = mkOption {
-        type = types.listOf types.int;
-        default = [];
-        description = ''
-          The list of EXWM workspaces assigned to this monitor.
-        '';
-      };
-    }];
-  };
+  # options.services.xserver.xrandrHeads = mkOption {
+  #   type = with types; either str (submodule {
+  #     options.workspaces = mkOption {
+  #       type = types.listOf types.int;
+  #       default = [];
+  #       description = ''
+  #       The list of EXWM workspaces assigned to this monitor.
+  #       '';
+  #     };
+  #   });
+  # };
 
   config = {
     ocelot.ui.login.sessions = mkOrder 500 [

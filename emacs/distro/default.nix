@@ -31,20 +31,20 @@ with lib;
   };
 
   options.users.users = mkOption {
-    options = [{
-      emacs.distribution = mkOption {
+    type = with types; loaOf (submodule {
+      options.emacs.distribution = mkOption {
         type = types.string;
         default = "global";
         description = ''
-          Per-user emacs configuration distribution setting. See
-          `options.ocelot.emacs.distribution` for the global
-          setting and documentation for the possible values.
+        Per-user emacs configuration distribution setting. See
+        `options.ocelot.emacs.distribution` for the global
+        setting and documentation for the possible values.
 
-          This option can be set to any of the
-          `options.ocelot.emacs.distribution` values, or "global"
-          (the default) to use the global setting.
+        This option can be set to any of the
+        `options.ocelot.emacs.distribution` values, or "global"
+        (the default) to use the global setting.
         '';
       };
-    }];
+    });
   };
 }
