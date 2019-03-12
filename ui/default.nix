@@ -26,7 +26,7 @@ in
 
     workspaces = mkOption {
       type = types.attrsOf (types.listOf types.int);
-      default = [];
+      default = {};
       description = ''
       An attribute set whose keys are RandR display names, and values are
       lists of EXWM workspace numbers assigned to each display.
