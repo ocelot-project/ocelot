@@ -2,7 +2,7 @@
 # elisp used by Ocelot.
 # TODO: set `ocelot-pinned-packages` using Nix
 { lib, callPackage, stdenv, git, writeText, writeScript, versioning,
-  exwm, evil-unimpaired, highlight,
+  exwm, highlight,
   globalDistribution, userDistributions,
   elpaPinned, orgPinned, melpaPinned, spacemacs, prelude,
   earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout,
@@ -93,7 +93,6 @@ installerCfg = import ./ocelot-installer-config.nix {
   inherit elpaPinned;
   inherit melpaPinned;
   inherit orgPinned;
-  inherit evil-unimpaired;
 };
 
 in

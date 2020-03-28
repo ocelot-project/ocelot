@@ -1,4 +1,4 @@
-{ lib, emacsPackagesNg, emacs, stdenv, git,
+{ lib, pkgs, external, emacsPackagesNg, emacs, stdenv, git,
   writeText, writeScript, fetchFromGitHub,
   versioning ? { system.Ocelot.version = "0.1"; },
   globalDistribution, userDistributions ? {},
@@ -28,9 +28,13 @@ ocelotEmacs = emacsPackagesNg.overrideScope' (self: super: {
   orgPinned = import ./epkgs/org-pinned.nix {
     inherit (self) callPackage;
   };
-  melpaPinned = import ./epkgs/melpa-pinned.nix {
-    inherit (self) callPackage;
+  # melpaPinned = import ./epkgs/melpa-pinned.nix {
+  #   inherit (self) callPackage;
+  # };
+  melpaGeneric = import ./epkgs/melpa-packages.nix {
+    inherit lib pkgs external;
   };
+  melpaPinned = self.melpaGeneric "stable";
   # highlight = import ./epkgs/highlight.nix {
   #   inherit (self) callPackage;
   # };
@@ -54,14 +58,6 @@ ocelotEmacs = emacsPackagesNg.overrideScope' (self: super: {
     inherit (self) melpaPinned;
     inherit (self) highlight;
     exwm = self.elpaPinned.exwm;
-    evil-unimpaired = import ./epkgs/evil-unimpaired.nix {
-      inherit (self) callPackage;
-      spacemacs = import ./distro/spacemacs.nix {
-        inherit fetchFromGitHub;
-      };
-      dash = self.melpaPinned.dash;
-      f = self.melpaPinned.f;
-    };
     spacemacs = import ./distro/spacemacs.nix {
       inherit fetchFromGitHub;
     };
