@@ -42,6 +42,7 @@ ocelotEmacs = emacsPackagesNg.overrideScope' (self: super: {
     inherit lib;
     inherit (self) callPackage;
     inherit stdenv;
+    inherit emacs;
     inherit git;
     inherit writeText;
     inherit writeScript;

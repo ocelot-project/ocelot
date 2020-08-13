@@ -52,7 +52,10 @@ with lib;
 
       # System utilities:
       pv # A modernized `dd`
+      direnv
     ];
+
+    services.lorri.enable = true;
 
     fonts = {
       enableFontDir = true;

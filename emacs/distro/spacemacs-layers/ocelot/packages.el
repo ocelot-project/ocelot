@@ -14,7 +14,8 @@
 ;;; Code:
 
 (defconst ocelot-packages
-  '(ocelot)
+  '(ocelot
+    direnv)
   "The list of Lisp packages required by the ocelot Spacemacs layer.")
 
 (defun ocelot/init-ocelot ()
@@ -47,5 +48,10 @@
       (spacemacs/declare-prefix "Sh" "help")
       (spacemacs/set-leader-keys "Sha" 'ocelot-about)
       (spacemacs/set-leader-keys "Shv" 'ocelot-version))))
+
+(defun ocelot/init-direnv ()
+  (use-package direnv
+    :defer nil
+    :init (direnv-mode)))
 
 ;;; packages.el ends here
