@@ -49,6 +49,7 @@ with lib;
       poppler # DocView mode (PDF)
       poppler_utils # DocView mode (PDF)
       ctags # Exuberant Ctags, for building tags files
+      python3 # treemacs
 
       # System utilities:
       pv # A modernized `dd`
