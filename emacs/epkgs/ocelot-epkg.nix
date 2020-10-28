@@ -1,6 +1,6 @@
-{ writeText, callPackage }:
+{ callPackage, writeText, melpaBuild }:
 
-callPackage ({ melpaBuild, lib }: melpaBuild {
+callPackage ({ lib }: melpaBuild {
   pname = "ocelot";
   version = "0.0.1";
   src = ./ocelot;

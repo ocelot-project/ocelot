@@ -38,7 +38,7 @@ in
     ocelot.ui.login.sessions = mkOrder 500 [
       {
        name = "Textmode Emacs";
-       command = "exec ${pkgs.emacs}/bin/emacs -nw";
+       command = "exec ${pkgs.ocelotEmacs}/bin/emacs -nw";
       }
 
       {

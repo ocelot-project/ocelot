@@ -1,14 +1,13 @@
 # This package collects the early startup and system-dependent
 # elisp used by Ocelot.
 # TODO: set `ocelot-pinned-packages` using Nix
-{ lib, callPackage, stdenv, emacs, git, writeText, writeScript, versioning,
-  exwm, highlight,
-  globalDistribution, userDistributions,
-  elpaPinned, orgPinned, melpaPinned, spacemacs, prelude,
+{ stdenv, callPackage, writeText, writeScript, epkgs, melpaBuild,
+  versions, globalDistribution, userDistributions,
+  git, spacemacs, prelude,
   earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout,
   workspaces, lockerMessage }:
 
-with lib;
+with stdenv.lib;
 
 let
   versionsToPairs = attrs: concatStringsSep "\n" (
@@ -57,13 +56,13 @@ ocelotSystemCfg = writeText "ocelot-system.el" ''
   "How long the system says credentials should stay cached (in minutes).")
 
   (defvar ocelot-software-versions (list
-  ${versionsToPairs versioning.system}
-  ${versionsToPairs versioning.emacs}
-  ${versionsToPairs versioning.application}
-  ${versionsToPairs versioning.package-management}
-  ${versionsToPairs versioning.base-system}
-  ${versionsToPairs versioning.kernel}
-  ${versionsToPairs versioning.platform})
+  ${versionsToPairs versions.system}
+  ${versionsToPairs versions.emacs}
+  ${versionsToPairs versions.application}
+  ${versionsToPairs versions.package-management}
+  ${versionsToPairs versions.base-system}
+  ${versionsToPairs versions.kernel}
+  ${versionsToPairs versions.platform})
   "Used by `ocelot-version'.")
 
   (defvar ocelot-spacemacs-repo-script "${spacemacsRepoScript}")
@@ -73,10 +72,6 @@ ocelotSystemCfg = writeText "ocelot-system.el" ''
   '(
   ${workspacesList workspaces})
   "The system-defined plist mapping framebuffers to workspaces.")
-
-  ;; Set EDITOR and VISUAL to the system emacsclient
-  (setenv "EDITOR" "${emacs}/bin/emacsclient")
-  (setenv "VISUAL" "${emacs}/bin/emacsclient")
 
   (declare-function ocelot "ocelot-startup.el")
   (defvar ocelot-inhibit-startup nil)
@@ -90,22 +85,16 @@ ocelotSystemCfg = writeText "ocelot-system.el" ''
 '';
 
 installerCfg = import ./ocelot-installer-config.nix {
-  inherit writeText;
-  inherit spacemacs;
-  inherit prelude;
-  inherit globalDistribution;
-  inherit elpaPinned;
-  inherit melpaPinned;
-  inherit orgPinned;
+  inherit writeText spacemacs prelude globalDistribution epkgs;
 };
 
 in
 
-callPackage ({ melpaBuild, lib }: melpaBuild {
+callPackage ({ lib }: melpaBuild {
   pname = "ocelot-system";
-  version = versioning.system.Ocelot.version;
+  version = versions.system.Ocelot.version;
   src = ./ocelot-system;
-  packageRequires = [ exwm ];
+  packageRequires = [ epkgs.exwm ];
   preBuild = ''
     cp ${ocelotSystemCfg} ocelot-system.el
     cp ${installerCfg} ocelot-installer-config.el

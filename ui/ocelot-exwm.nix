@@ -4,7 +4,6 @@ with lib;
 
 let
   cfg = config.services.xserver.windowManager.ocelot-exwm;
-  emacs = pkgs.emacs;
 in
 {
   options = {
@@ -17,9 +16,9 @@ in
     services.xserver.windowManager.session = singleton {
       name = "ocelot-exwm";
       start = ''
-        export VISUAL=${pkgs.emacs}/bin/emacsclient
+        export VISUAL=${pkgs.ocelotEmacs}/bin/emacsclient
         export EDITOR="$VISUAL"
-        exec dbus-launch --exit-with-session ${pkgs.emacs}/bin/emacs \
+        exec dbus-launch --exit-with-session ${pkgs.ocelotEmacs}/bin/emacs \
         --fullscreen --ocelot-graphical
       '';
     };

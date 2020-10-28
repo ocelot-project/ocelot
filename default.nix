@@ -14,7 +14,7 @@ with lib;
       type = types.attrsOf types.attrs;
       default = {
         system.Ocelot.version = "0.1";
-        emacs.Emacs.version = pkgs.emacs.emacs.version;
+        emacs.Emacs.version = pkgs.ocelotEmacs.emacs.version;
         application = {};
         package-management.Nix.version = pkgs.nix.version;
         base-system.NixOS.version = (if builtins.hasAttr "nixos" config.system
@@ -39,7 +39,7 @@ with lib;
   config = mkMerge [{
     environment.systemPackages = with pkgs; [
       # Base packages:
-      emacs
+      ocelotEmacs
       git # Nix-based distros usually lean heavily on git
       man_db # extra documentation
       manpages # extra documentation
