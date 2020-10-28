@@ -14,7 +14,9 @@ with lib;
       type = types.attrsOf types.attrs;
       default = {
         system.Ocelot.version = "0.1";
-        emacs.Emacs.version = pkgs.ocelotEmacs.emacs.version;
+        emacs.Emacs.version =
+          builtins.head (builtins.match "[^0-9]*([0-9].*)" pkgs.ocelotEmacs.emacs.version) +
+          " (JIT " + pkgs.ocelotEmacsJit.emacs.version + ")";
         application = {};
         package-management.Nix.version = pkgs.nix.version;
         base-system.NixOS.version = (if builtins.hasAttr "nixos" config.system

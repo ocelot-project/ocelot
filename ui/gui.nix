@@ -98,7 +98,7 @@ in
         command = "${graphicalEmacsSession}";
       }
        {
-         name = "Graphical Emacs (with JIT)";
+         name = "Graphical Emacs (JIT)";
          graphical = true;
          command = "${jitGraphicalEmacsSession}";
        }
