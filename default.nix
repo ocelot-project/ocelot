@@ -58,7 +58,7 @@ with lib;
     services.lorri.enable = true;
 
     fonts = {
-      enableFontDir = true;
+      fontDir.enable = true;
       enableGhostscriptFonts = true;
 
       fonts = with pkgs; [

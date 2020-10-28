@@ -31,7 +31,7 @@ in
     };
 
     terminals = mkOption {
-      type = types.listOf types.string;
+      type = types.listOf types.str;
       default = ["tty1" "tty2" "tty3" "tty4"];
       description = ''
         A list of terminal devices for which the Ocelot Login Manager should

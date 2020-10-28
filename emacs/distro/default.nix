@@ -5,7 +5,7 @@ with lib;
 {
   options.ocelot.emacs = {
     distribution = mkOption {
-      type = types.string;
+      type = types.str;
       default = "ask";
       description = ''
         Chooses a global default Emacs configuration distribution
@@ -33,7 +33,7 @@ with lib;
   options.users.users = mkOption {
     type = with types; loaOf (submodule {
       options.emacs.distribution = mkOption {
-        type = types.string;
+        type = types.str;
         default = "global";
         description = ''
         Per-user emacs configuration distribution setting. See

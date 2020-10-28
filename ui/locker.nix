@@ -18,7 +18,7 @@ in
     };
 
     message = mkOption {
-      type = types.string;
+      type = types.str;
       default = "Terminal locked by $USER from tty$XDG_VTNR.";
       description = ''
         A notification message displayed above the screen locker's

@@ -12,7 +12,7 @@ in
 
   options.ocelot.ui = {
     earlyBootForegroundColor = mkOption {
-      type = types.string;
+      type = types.str;
       default = "#FFFFFF";
       description = ''
         Configures emacs to set a foreground text color early in its startup
@@ -21,7 +21,7 @@ in
     };
 
     earlyBootBackgroundColor = mkOption {
-      type = types.string;
+      type = types.str;
       default = "#110024";
       description = ''
         Configures emacs to set a background text color early in its startup
