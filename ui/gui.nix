@@ -28,6 +28,9 @@ let
     # TODO: write an elisp user service manager with automatic respawning
     xbanish &
 
+    # Have to add the bloat of a polkit agent or else libvirt breaks
+    ${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &
+
     export VISUAL=${pkgs.emacs}/bin/emacsclient
     export EDITOR="$VISUAL"
     exec dbus-launch --exit-with-session ${pkgs.emacs}/bin/emacs \
