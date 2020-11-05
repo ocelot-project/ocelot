@@ -27,21 +27,15 @@ in
     (
       (super.emacsPackagesGen emacsPkg).emacsWithPackages (epkgs: [
         epkgs.exwm
-        (import ./epkgs/ocelot-system.nix {
-          inherit (self) stdenv callPackage writeText writeScript git;
+        (super.callPackage ./epkgs/ocelot-system.nix {
           inherit (self.emacsPackages) melpaBuild;
           inherit epkgs versions globalDistribution userDistributions;
           inherit earlyBootBackgroundColor earlyBootForegroundColor;
           inherit credentialsTimeout workspaces lockerMessage;
-          spacemacs = import ./distro/spacemacs.nix {
-            inherit (self) fetchFromGitHub;
-          };
-          prelude = import ./distro/prelude.nix {
-            inherit (self) fetchFromGitHub;
-          };
+          spacemacs = super.callPackage ./distro/spacemacs.nix {};
+          prelude = super.callPackage ./distro/prelude.nix {};
         })
-        (import ./epkgs/ocelot-epkg.nix {
-          inherit (self) callPackage writeText;
+        (super.callPackage ./epkgs/ocelot-epkg.nix {
           inherit (self.emacsPackages) melpaBuild;
         })
       ])
@@ -51,21 +45,15 @@ in
     (
       (super.emacsPackagesGen emacsJitPkg).emacsWithPackages (epkgs: [
         epkgs.exwm
-        (import ./epkgs/ocelot-system.nix {
-          inherit (self) stdenv callPackage writeText writeScript git;
+        (super.callPackage ./epkgs/ocelot-system.nix {
           inherit (self.emacsPackages) melpaBuild;
           inherit epkgs versions globalDistribution userDistributions;
           inherit earlyBootBackgroundColor earlyBootForegroundColor;
           inherit credentialsTimeout workspaces lockerMessage;
-          spacemacs = import ./distro/spacemacs.nix {
-            inherit (self) fetchFromGitHub;
-          };
-          prelude = import ./distro/prelude.nix {
-            inherit (self) fetchFromGitHub;
-          };
+          spacemacs = super.callPackage ./distro/spacemacs.nix {};
+          prelude = super.callPackage ./distro/prelude.nix {};
         })
-        (import ./epkgs/ocelot-epkg.nix {
-          inherit (self) callPackage writeText;
+        (super.callPackage ./epkgs/ocelot-epkg.nix {
           inherit (self.emacsPackages) melpaBuild;
         })
       ])
