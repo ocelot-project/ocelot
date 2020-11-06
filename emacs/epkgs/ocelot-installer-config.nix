@@ -16,9 +16,5 @@ writeText "ocelot-installer-config.el" ''
   (defvar ocelot-global-distribution "${globalDistribution}")
   (defvar ocelot-user-distributions '())
 
-  (defvar ocelot-installer-spacemacs-packages '())
-
-  (defvar ocelot-installer-prelude-packages '())
-
   (provide 'ocelot-installer-config)
   ''

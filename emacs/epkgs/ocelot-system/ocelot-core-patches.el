@@ -1,3 +1,4 @@
+(defvar ocelot-local-elpa)
 (defvar ocelot-pinned-packages)
 (defvar ocelot-frozen-packages)
 
@@ -12,6 +13,9 @@
 (declare-function configuration-layer/discover-layers
                   "ext:core-configuration-layer.el")
 (declare-function
+ package-initialize@ocelot-add-local-elpa
+ "ocelot-core-patches.el")
+(declare-function
  configuration-layer//is-package-orphan@ocelot-spacemacs-pinning-hack
  "ocelot-core-patches.el")
 (declare-function
@@ -20,6 +24,17 @@
 (declare-function
  configuration-layer/discover-layers@ocelot-spacemacs-system-layer-hack
  "ocelot-core-patches.el")
+
+;; package.el patches
+(with-eval-after-load 'package
+  ;; Add a local package archive
+  (define-advice package-initialize
+      (:before (&rest args)
+               ocelot-add-local-elpa)
+    (ignore args)
+    (add-to-list 'package-archives
+                 `("local" . ,ocelot-local-elpa)
+                 'append)))
 
 ;; Spacemacs patches
 (with-eval-after-load 'core-configuration-layer

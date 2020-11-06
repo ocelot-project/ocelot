@@ -10,8 +10,7 @@
 
 (defun ocelot-dotfile-installer ()
   (let ((distribution (assoc-string (user-login-name)
-                                    ocelot-user-distributions))
-        package-set)
+                                    ocelot-user-distributions)))
     (when (or (not distribution)
               (equal distribution "global"))
       (setq distribution ocelot-global-distribution))
@@ -63,8 +62,7 @@ under Prelude.
                                              "~/.emacs.d")
                                             (default-file-modes))
       (insert " Done.\n")
-      (redisplay)
-      (setq package-set ocelot-installer-spacemacs-packages))
+      (redisplay))
      ((equal distribution "prelude")
       (when (file-directory-p (file-name-as-directory "~/.emacs.d"))
         (insert "Moving existing ~/.emacs.d to trash...\n")
@@ -81,8 +79,7 @@ under Prelude.
                                              "~/.emacs.d")
                                             (default-file-modes))
       (insert " Done.\n")
-      (redisplay)
-      (setq package-set ocelot-installer-prelude-packages))
+      (redisplay))
      ((equal distribution "none")
       (when (not (file-exists-p "~/.emacs.d/init.el"))
         (insert "Creating a placeholder ~/.emacs.d/init.el...")
@@ -94,38 +91,7 @@ under Prelude.
         (redisplay)))
      (t (insert "No distribution selected; exiting.")))
 
-    (when package-set
-      (ocelot-installer-preload-packages package-set))
     (bury-buffer)))
-
-(defun ocelot-installer-preload-packages (package-set)
-  (require 'package)
-
-  (insert "\nInstalling precompiled package set...\n")
-  (redisplay)
-  (when (not (file-directory-p (file-name-as-directory "~/.emacs.d/elpa")))
-    (make-directory "~/.emacs.d/elpa" 'parents))
-  (dolist (pkg package-set)
-    (insert "Installing package " (symbol-name (plist-get pkg 'name)) "...")
-    (redisplay)
-    (dolist (pkg-dir (directory-files
-                      (file-name-as-directory
-                       (concat
-                        (file-name-as-directory (plist-get pkg
-                                                           'path))
-                        "share/emacs/site-lisp/elpa"))
-                      'full-name
-                      directory-files-no-dot-files-regexp
-                      'nosort))
-      (copy-directory pkg-dir (file-name-as-directory "~/.emacs.d/elpa"))
-      (ocelot-installer--directory-set-mode (file-name-as-directory
-                                             "~/.emacs.d/elpa")
-                                            (default-file-modes)))
-    (when (not (plist-get pkg 'dependency))
-      (customize-push-and-save 'package-selected-packages
-                               (list (plist-get pkg 'name))))
-    (insert " Done.\n")
-    (redisplay)))
 
 (defun ocelot-installer-clear-elpa ()
     "Empty the .emacs.d elpa subdirectory, if it exists."
