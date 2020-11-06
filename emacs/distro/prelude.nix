@@ -3,6 +3,6 @@
 fetchFromGitHub {
   owner = "bbatsov";
   repo = "prelude";
-  rev = "b4721bf6c5614022bfe3b72237694236813dd486";
-  sha256 = "1wgr4j740dkzic723zzh9bqs6bgl8cn66bxp610xxp4gxykcp7qx";
+  rev = "005cd8dba8d5b255cbadbf6b686a3e7d003079da";
+  sha256 = "080qzxpbj9w7p8rxbhaalhj5jygv8xqqkaw8pbf0zjx9i9jf9cz8";
 }

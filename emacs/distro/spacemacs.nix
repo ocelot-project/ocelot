@@ -1,8 +1,9 @@
 { fetchFromGitHub }:
 
+# Latest Spacemacs develop as of <2020-11-05 Thu>
 fetchFromGitHub {
   owner = "syl20bnr";
   repo = "spacemacs";
-  rev = "582f9aa45c2c90bc6ec98bccda33fc428e4c6d48";
-  sha256 = "0m634adqnwqvi8d7qkq7nh8ivfz6cx90idvwd2wiylg4w1hly252";
+  rev = "4c2fcc13cbd2b27b17149f8ac1a55a42a50ae2e9";
+  sha256 = "06qcvxx9nc7mdqkd556f7b98x4s7slla5bil6xvng4yfkxrm4n0d";
 }
