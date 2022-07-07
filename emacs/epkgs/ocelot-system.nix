@@ -1,13 +1,13 @@
 # This package collects the early startup and system-dependent
 # elisp used by Ocelot.
 # TODO: set `ocelot-pinned-packages` using Nix
-{ stdenv, callPackage, writeText, writeScript, git, localElpa,
+{ stdenv, lib, callPackage, writeText, writeScript, git, localElpa,
   versions, globalDistribution, userDistributions,
-  epkgs, melpaBuild, spacemacs, prelude,
+  epkgs, trivialBuild, spacemacs, prelude,
   earlyBootBackgroundColor, earlyBootForegroundColor, credentialsTimeout,
   workspaces, lockerMessage }:
 
-with stdenv.lib;
+with lib;
 
 let
   versionsToPairs = attrs: concatStringsSep "\n" (
@@ -94,7 +94,7 @@ installerCfg = callPackage ./ocelot-installer-config.nix {
 
 in
 
-callPackage ({ lib }: melpaBuild {
+callPackage ({ lib }: trivialBuild {
   pname = "ocelot-system";
   version = versions.system.Ocelot.version;
   src = ./ocelot-system;
@@ -102,9 +102,6 @@ callPackage ({ lib }: melpaBuild {
   preBuild = ''
     cp ${ocelotSystemCfg} ocelot-system.el
     cp ${installerCfg} ocelot-installer-config.el
-  '';
-  recipe = writeText "recipe" ''
-         (ocelot-system :fetcher git :url "localhost")
   '';
   meta = {
     license = lib.licenses.free;

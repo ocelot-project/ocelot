@@ -70,42 +70,44 @@ in
     # For graphical sessions, instruct the X server not to handle TTY or
     # DISPLAY assignment, since olman handles that. Also, disable autorun
     # since olman replaces a traditional X display manager.
-    services.xserver.tty = null;
-    services.xserver.display = null;
+    # services.xserver.tty = null;
+    # services.xserver.display = null;
     services.xserver.autorun = false;
 
-    systemd.services."olman@" = {
-      conflicts = [ "getty@%i.service" ];
-      onFailure = [ "getty@%i.service" ];
-      # after = [ "systemd-user-sessions.service" "plymouth-quit-wait.service" "systemd-logind.service" "systemd-vconsole-setup.service" ];
-      # requires = [ "systemd-logind.service" ];
-      # before = [ "getty.target" ];
-      aliases = map (tty: "autovt@${tty}.service") cfg.terminals;
-      restartIfChanged = false;
+    # systemd.services."olman@" = {
+    #   conflicts = [ "getty@%i.service" ];
+    #   onFailure = [ "getty@%i.service" ];
+    #   # after = [ "systemd-user-sessions.service" "plymouth-quit-wait.service" "systemd-logind.service" "systemd-vconsole-setup.service" ];
+    #   # requires = [ "systemd-logind.service" ];
+    #   # before = [ "getty.target" ];
+    #   restartIfChanged = false;
 
-      unitConfig = {
-        IgnoreOnIsolate = true;
-        ConditionPathExists = "/dev/tty0";
-      };
+    #   unitConfig = {
+    #     IgnoreOnIsolate = true;
+    #     ConditionPathExists = "/dev/tty0";
+    #   };
 
-      serviceConfig = {
-        Type = "idle";
-        Restart = "always";
-        RestartSec = 0;
-        UtmpIdentifier = "%I";
-        TTYPath = "/dev/%I";
-        TTYReset = true;
-        TTYVHangup = true;
-        TTYVTDisallocate = true;
-        KillMode = "process";
-        IgnoreSIGPIPE = false;
-        SendSIGHUP = true;
-        ExecStart= [
-          ""
-          "@${pkgs.utillinux}/sbin/agetty agetty --skip-login --login-program ${pkgs.olman}/bin/olman -o 'emacs -- -Q -nsl --no-init-file -l ${./login-ocelot-theme.el} -l ${./login.el}' --noclear --keep-baud %I 115200,38400,9600 $TERM"
-        ];
-      };
-    };
+    #   serviceConfig = {
+    #     Type = "idle";
+    #     Restart = "always";
+    #     RestartSec = 0;
+    #     UtmpIdentifier = "%I";
+    #     TTYPath = "/dev/%I";
+    #     TTYReset = true;
+    #     TTYVHangup = true;
+    #     TTYVTDisallocate = true;
+    #     KillMode = "process";
+    #     IgnoreSIGPIPE = false;
+    #     SendSIGHUP = true;
+    #     ExecStart= [
+    #       ""
+    #       "@${pkgs.utillinux}/sbin/agetty agetty --skip-login --login-program ${pkgs.olman}/bin/olman -o 'emacs -- -Q -nsl --no-init-file -l ${./login-ocelot-theme.el} -l ${./login.el}' --noclear --keep-baud %I 115200,38400,9600 $TERM"
+    #     ];
+    #   };
+    # };
+
+    # systemd.suppressedSystemUnits = [ "autovt@.service" ];
+    # systemd.units."olman@.service".aliases = [ "autovt@.service" ];
 
     environment.etc."olman.toml".text = ''
     [olman]

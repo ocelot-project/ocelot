@@ -14,7 +14,7 @@ buildRustPackage rec {
 
   buildInputs = [ pam ];
 
-  cargoSha256 = "0lw3c2dzakjm2i8xjndhc4nrb4zs46xifvav23p49z7gybvgarzf";
+  cargoSha256 = "sha256-bze/2m0FEiW9aqiGY4xJeDixWX5Lc8/AETbS5XHY0VU=";
 
   meta = with stdenv.lib; {
     description = "Ocelot Login Manager, a 'login' replacement";

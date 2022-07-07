@@ -71,6 +71,10 @@ let
          --fullscreen --ocelot-graphical
   '';
 
+  ocelotSession = pkgs.writeScriptBin "ocelot-session" ''
+    exec ${pkgs.xorg.xinit}/bin/xinit ${jitGraphicalEmacsSession} -- ${config.services.xserver.displayManager.xserverBin} :1 ${concatStringsSep " " config.services.xserver.displayManager.xserverArgs} vt1
+  '';
+
   cfg = config.ocelot.ui;
 in
 {
@@ -86,6 +90,7 @@ in
       xorg.setxkbmap
       xbanish
       alacritty
+      ocelotSession
 
       ghostscriptX # DocView mode (PDF)
       # unoconv # DocView mode (LibreOffice/MS formats)
@@ -111,8 +116,10 @@ in
         ocelot-exwm.enable = true;
       };
 
+      displayManager.defaultSession = "none+ocelot-exwm";
+
       desktopManager = {
-        default = "none+ocelot-exwm";
+        # default = "none+ocelot-exwm";
         xterm.enable = false;
       };
     };

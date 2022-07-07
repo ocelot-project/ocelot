@@ -27,8 +27,9 @@ in
     (
       (super.emacsPackagesGen emacsPkg).emacsWithPackages (epkgs: [
         epkgs.exwm
+        epkgs.vterm
         (super.callPackage ./epkgs/ocelot-system.nix {
-          inherit (self.emacsPackages) melpaBuild;
+          inherit (self.emacsPackages) trivialBuild;
           inherit epkgs versions globalDistribution userDistributions;
           inherit earlyBootBackgroundColor earlyBootForegroundColor;
           inherit credentialsTimeout workspaces lockerMessage;
@@ -36,7 +37,7 @@ in
           prelude = super.callPackage ./distro/prelude.nix {};
         })
         (super.callPackage ./epkgs/ocelot-epkg.nix {
-          inherit (self.emacsPackages) melpaBuild;
+          inherit (self.emacsPackages) trivialBuild;
         })
       ])
     )
@@ -45,8 +46,10 @@ in
     (
       (super.emacsPackagesGen emacsJitPkg).emacsWithPackages (epkgs: [
         epkgs.exwm
+        epkgs.vterm
+        self.nix-modeline
         (super.callPackage ./epkgs/ocelot-system.nix {
-          inherit (self.emacsPackages) melpaBuild;
+          inherit (self.emacsPackages) trivialBuild;
           inherit epkgs versions globalDistribution userDistributions;
           inherit earlyBootBackgroundColor earlyBootForegroundColor;
           inherit credentialsTimeout workspaces lockerMessage;
@@ -54,7 +57,7 @@ in
           prelude = super.callPackage ./distro/prelude.nix {};
         })
         (super.callPackage ./epkgs/ocelot-epkg.nix {
-          inherit (self.emacsPackages) melpaBuild;
+          inherit (self.emacsPackages) trivialBuild;
         })
       ])
     )

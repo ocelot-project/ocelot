@@ -1,13 +1,10 @@
-{ callPackage, writeText, melpaBuild }:
+{ callPackage, writeText, trivialBuild }:
 
-callPackage ({ lib }: melpaBuild {
+callPackage ({ lib }: trivialBuild {
   pname = "ocelot";
   version = "0.0.1";
   src = ./ocelot;
   packageRequires = [ ];
-  recipe = writeText "recipe" ''
-         (ocelot :fetcher git :url "localhost")
-  '';
   meta = {
     license = lib.licenses.free;
   };
